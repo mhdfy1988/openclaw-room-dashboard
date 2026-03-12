@@ -241,7 +241,12 @@ async function callGatewayCliMethod(config, method, params) {
 }
 
 export function createGatewayClient(config) {
-  async function invokeTool(tool, args = {}) {
+  async function invokeTool(tool, args = {}, options = {}) {
+    const requestSessionKey =
+      typeof options?.sessionKey === 'string' && options.sessionKey.trim()
+        ? options.sessionKey.trim()
+        : config.sessionKey
+
     try {
       const headers = {
         'Content-Type': 'application/json',
@@ -265,7 +270,7 @@ export function createGatewayClient(config) {
           tool,
           action: 'json',
           args,
-          sessionKey: config.sessionKey,
+          sessionKey: requestSessionKey,
         },
         timeoutMs: config.timeoutMs,
         allowInsecureTls: config.allowInsecureTls === true,

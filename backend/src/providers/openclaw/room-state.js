@@ -15,6 +15,7 @@ const ACTIVE_MS = 2 * 60 * 1000
 const THINKING_MS = 10 * 60 * 1000
 const IDLE_MS = 6 * 60 * 60 * 1000
 const SLEEPING_MS = 3 * 24 * 60 * 60 * 1000
+const SESSION_FALLBACK_TTL_MS = 30 * 60 * 1000
 const MAX_EVENTS = 6
 
 const ACTIVE_ROLE_ZONES = {
@@ -30,6 +31,158 @@ function extractAgentIdFromSessionKey(sessionKey) {
 
   const parts = sessionKey.split(':')
   return parts[1] || null
+}
+
+function buildAgentMainSessionKey(agentId) {
+  if (typeof agentId !== 'string') {
+    return null
+  }
+
+  const normalized = agentId.trim()
+  return normalized ? `agent:${normalized}:main` : null
+}
+
+function collectSessionQueryKeys(configSessionKey, agentsData) {
+  const keys = []
+  const seen = new Set()
+
+  const pushKey = (value) => {
+    if (typeof value !== 'string') {
+      return
+    }
+
+    const normalized = value.trim()
+    if (!normalized || seen.has(normalized)) {
+      return
+    }
+
+    seen.add(normalized)
+    keys.push(normalized)
+  }
+
+  pushKey(configSessionKey)
+  pushKey(buildAgentMainSessionKey(agentsData?.requester))
+
+  for (const agent of Array.isArray(agentsData?.agents) ? agentsData.agents : []) {
+    pushKey(buildAgentMainSessionKey(agent?.id))
+  }
+
+  return keys
+}
+
+function mergeSessionRecord(existing, next) {
+  if (!existing) {
+    return next
+  }
+
+  const merged = { ...existing }
+
+  for (const [key, value] of Object.entries(next || {})) {
+    if (value !== undefined && value !== null && value !== '') {
+      merged[key] = value
+    } else if (!(key in merged)) {
+      merged[key] = value
+    }
+  }
+
+  return merged
+}
+
+function mergeSessionPayloads(payloads) {
+  const deduped = new Map()
+  const anonymousSessions = []
+
+  for (const payload of payloads) {
+    for (const session of Array.isArray(payload?.sessions) ? payload.sessions : []) {
+      const identity = session?.sessionId || session?.key || null
+
+      if (!identity) {
+        anonymousSessions.push(session)
+        continue
+      }
+
+      deduped.set(identity, mergeSessionRecord(deduped.get(identity), session))
+    }
+  }
+
+  return [...deduped.values(), ...anonymousSessions]
+}
+
+function groupSessionsByAgent(sessions) {
+  const grouped = new Map()
+
+  for (const session of Array.isArray(sessions) ? sessions : []) {
+    const agentId = extractAgentIdFromSessionKey(session?.key)
+    if (!agentId) {
+      continue
+    }
+
+    const bucket = grouped.get(agentId) || []
+    bucket.push(session)
+    grouped.set(agentId, bucket)
+  }
+
+  for (const sessionList of grouped.values()) {
+    sessionList.sort((left, right) => (right?.updatedAt || 0) - (left?.updatedAt || 0))
+  }
+
+  return grouped
+}
+
+function hydrateSnapshotWithFallbackSessions(snapshot, fallbackCache, now) {
+  if (!(fallbackCache instanceof Map)) {
+    return snapshot
+  }
+
+  const groupedCurrentSessions = groupSessionsByAgent(snapshot.sessionsData.sessions)
+  const mergedSessions = [...snapshot.sessionsData.sessions]
+  const knownAgentIds = new Set([
+    snapshot.agentsData.requester,
+    ...Array.from(groupedCurrentSessions.keys()),
+    ...snapshot.agentsData.agents.map((agent) => agent?.id).filter(Boolean),
+  ])
+
+  for (const [agentId, entry] of [...fallbackCache.entries()]) {
+    if (!agentId || !entry) {
+      fallbackCache.delete(agentId)
+      continue
+    }
+
+    if (now - entry.cachedAt > SESSION_FALLBACK_TTL_MS) {
+      fallbackCache.delete(agentId)
+      continue
+    }
+
+    if (groupedCurrentSessions.has(agentId)) {
+      continue
+    }
+
+    if (!knownAgentIds.has(agentId)) {
+      fallbackCache.delete(agentId)
+      continue
+    }
+
+    mergedSessions.push(...entry.sessions)
+  }
+
+  for (const agentId of knownAgentIds) {
+    const currentSessions = groupedCurrentSessions.get(agentId) || []
+
+    if (currentSessions.length > 0) {
+      fallbackCache.set(agentId, {
+        sessions: currentSessions,
+        cachedAt: now,
+      })
+    }
+  }
+
+  return {
+    ...snapshot,
+    sessionsData: {
+      ...snapshot.sessionsData,
+      sessions: mergedSessions,
+    },
+  }
 }
 
 function inferRole(agentId, defaultAgentId, index) {
@@ -206,16 +359,43 @@ function buildStatusSessionIndex(statusData) {
   return { byKey, bySessionId }
 }
 
-export async function readGatewaySnapshot(client) {
-  const [sessionsData, agentsData] = await Promise.all([
-    client.invokeTool('sessions_list', { limit: 100 }),
-    client.invokeTool('agents_list', {}).catch(() => ({ agents: [] })),
-  ])
+export async function readGatewaySnapshot(client, config = {}, fallbackCache = null, now = Date.now()) {
+  const agentsData = await client.invokeTool('agents_list', {}).catch(() => ({ agents: [] }))
+  const sessionQueryKeys = collectSessionQueryKeys(config?.sessionKey, agentsData)
+  const sessionPayloads = []
+  const sessionWarnings = []
+  let firstSessionError = null
 
-  return normalizeGatewaySnapshot({
-    sessionsData,
+  await Promise.all(
+    sessionQueryKeys.map(async (sessionKey) => {
+      try {
+        const payload = await client.invokeTool('sessions_list', { limit: 100 }, { sessionKey })
+        sessionPayloads.push(payload)
+      } catch (error) {
+        if (!firstSessionError) {
+          firstSessionError = error
+        }
+
+        sessionWarnings.push(
+          `sessions_list(${sessionKey}) failed: ${error?.message || String(error)}`,
+        )
+      }
+    }),
+  )
+
+  if (sessionPayloads.length === 0 && firstSessionError) {
+    throw firstSessionError
+  }
+
+  const snapshot = normalizeGatewaySnapshot({
+    sessionsData: {
+      sessions: mergeSessionPayloads(sessionPayloads),
+    },
     agentsData,
   })
+
+  snapshot.warnings.push(...sessionWarnings)
+  return hydrateSnapshotWithFallbackSessions(snapshot, fallbackCache, now)
 }
 
 export async function readGatewayMeta(client) {
@@ -242,8 +422,13 @@ export async function readGatewayMeta(client) {
   })
 }
 
-export async function fetchOpenClawRoomState(client, config, now, meta) {
-  const { sessionsData, agentsData, warnings: snapshotWarnings } = await readGatewaySnapshot(client)
+export async function fetchOpenClawRoomState(client, config, now, meta, fallbackCache = null) {
+  const { sessionsData, agentsData, warnings: snapshotWarnings } = await readGatewaySnapshot(
+    client,
+    config,
+    fallbackCache,
+    now,
+  )
   const configuredAgents = Array.isArray(agentsData.agents) ? agentsData.agents : []
   const defaultAgentId =
     agentsData.requester ||

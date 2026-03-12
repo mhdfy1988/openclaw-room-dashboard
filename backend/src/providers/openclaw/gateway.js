@@ -32,7 +32,7 @@ export async function testOpenClawGatewayConfig(integration) {
 
   const client = createGatewayClient(config)
   const [snapshot, meta] = await Promise.all([
-    readGatewaySnapshot(client),
+    readGatewaySnapshot(client, config),
     readGatewayMeta(client).catch(() => createEmptyGatewayMeta()),
   ])
   const channels = summarizeGatewayChannels(meta.healthData)
@@ -80,6 +80,7 @@ export function createOpenClawRoomStateProvider({ env = process.env, logger = nu
     cachedMeta: null,
     metaCachedAt: 0,
     metaInFlight: null,
+    sessionFallbackCache: new Map(),
     lastSuccessAt: null,
     lastError: null,
   }
@@ -93,6 +94,7 @@ export function createOpenClawRoomStateProvider({ env = process.env, logger = nu
     runtime.cachedMeta = null
     runtime.metaCachedAt = 0
     runtime.metaInFlight = null
+    runtime.sessionFallbackCache = new Map()
     runtime.lastSuccessAt = null
     runtime.lastError = nextConfig.configError || null
   }
@@ -140,7 +142,13 @@ export function createOpenClawRoomStateProvider({ env = process.env, logger = nu
 
     try {
       const meta = await getGatewayMeta().catch(() => createEmptyGatewayMeta())
-      const state = await fetchOpenClawRoomState(runtime.client, runtime.config, now, meta)
+      const state = await fetchOpenClawRoomState(
+        runtime.client,
+        runtime.config,
+        now,
+        meta,
+        runtime.sessionFallbackCache,
+      )
       runtime.lastSuccessAt = state.updatedAt
       runtime.lastError = null
 
