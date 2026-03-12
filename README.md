@@ -1,103 +1,152 @@
-# room-dashboard
+# OpenClaw Room Dashboard
 
-本地多 agent 可视化状态面板项目。
+一个面向 OpenClaw Gateway 的房间态可视化看板。
 
-## 目标
+它把多智能体状态、最近事件、预警、连接来源和房间场景放进一个统一界面，适合本地开发、演示联调，以及远程 Gateway 运行态观察。
 
-- 展示 3 个 agent 的实时状态
-- 用像素小房间风格可视化主控 / 工作 / 学习三种角色
-- 为后续调度、事件流、任务详情打基础
+## 功能概览
 
-## 项目目录
+- 像素房间场景展示角色分布和状态
+- 角色详情面板，查看会话、模型、令牌和运行信息
+- 最近事件、当前连接、预警中心
+- OpenClaw Gateway 配置面板
+- SSE 实时刷新
+- Mock 模式和真实 Gateway 模式切换
+- 远程 Gateway `degraded` 降级识别
 
-- `frontend/`：前端页面
-- `backend/`：本地状态服务
-- `shared/`：前后端共享类型
-- `assets/`：像素资源与设计素材
-- `docs/`：方案与接口文档
-- `scripts/`：辅助脚本
+## 技术栈
 
-## 当前阶段
-
-当前处于 MVP 骨架阶段：
-
-- [x] 项目结构初始化
-- [x] 文档落盘
-- [ ] 前端基础页面
-- [ ] 后端基础接口
-- [ ] 实时状态流
-
-## 运行规划
-
-- 前端：React + Vite + TypeScript
-- 后端：Node.js + Fastify + TypeScript
+- 前端：React 19 + Vite + TypeScript
+- 后端：Node.js + Fastify + ESM JavaScript
 - 实时：SSE
+- 测试：Vitest + Node test runner + Playwright smoke test
 
-## 共享协作约定
+## 目录结构
 
-该目录仅用于 `room-dashboard` 项目开发。
+```text
+backend/
+  src/
+    app/
+    config/
+    providers/openclaw/
+    state/
+frontend/
+  src/
+scripts/
+```
 
-- 主控 agent：总体设计、任务分派、整合结果
-- Work Buddy：偏实现与验证
-- Study Buddy：偏研究、建模、文档，并兼任 UI / 视觉设计职责
+## 快速开始
 
-## 开发 / 生产分离
+### 1. 安装依赖
 
-- 开发环境与生产环境必须分开
-- 开发中的新版本先在 dev 验证，再发布到 prod
-- 生产版本应保持稳定可访问，不能因为开发过程而中断
+```powershell
+npm install
+```
 
-## 文档留存要求
+### 2. 启动开发环境
 
-- 每个阶段的设计、开发、研究、学习相关内容都必须在 `docs/` 留存
-- 重要方案、取舍、阶段结论、实现计划、部署说明应形成文档，不只停留在聊天里
-- 新阶段开始或结束时，应同步补充或更新对应文档
-- UI / 场景相关迭代除设计与实现外，还应补充截图评审记录，避免脱离实际效果盲改
-- 用户确认过的参考图 / 参考链接 / 风格基准也应留存在 `docs/`，作为后续改版长期参照
+```powershell
+npm run dev:bg:start
+```
 
-## 当前访问地址
+查看状态：
+
+```powershell
+npm run dev:bg:status
+```
+
+停止：
+
+```powershell
+npm run dev:bg:stop
+```
+
+### 3. 访问地址
 
 - Dev Frontend: `http://127.0.0.1:5173`
 - Dev Backend: `http://127.0.0.1:4310`
 - Prod App: `http://127.0.0.1:4320`
 
-## OpenClaw Gateway Integration
+## OpenClaw 配置
 
-The backend can read live data from an OpenClaw Gateway instead of the local mock data.
+后端默认读取：
 
-Recommended setup:
+```text
+backend/src/openclaw.config.local.json
+```
 
-1. Copy `backend/openclaw.config.example.json` to `backend/openclaw.config.local.json`
-2. Fill in your own `url` and `token`
-3. Start the backend normally
+示例文件：
 
-Local config file fields:
+```text
+backend/src/openclaw.config.example.json
+```
 
-- `enabled`: Set `false` to force mock mode even if other values exist
-- `url`: Gateway base URL. Supports `http(s)://`, `ws(s)://`, or a dashboard URL that already contains `?token=` / `#token=`
-- `token`: Gateway bearer token
-- `sessionKey`: Optional tool session context. Defaults to `main`
-- `timeoutMs`: Optional request timeout in milliseconds. Defaults to `6000`
-- `messageChannel`: Optional header forwarded to Gateway tool calls
-- `accountId`: Optional header forwarded to Gateway tool calls
-
-Environment variables still work and override file values:
-
-- `OPENCLAW_URL`: Gateway base URL. Supports `http(s)://`, `ws(s)://`, or a dashboard URL that already contains `?token=` / `#token=`.
-- `OPENCLAW_TOKEN`: Gateway bearer token. Optional if the token is already embedded in `OPENCLAW_URL`.
-- `OPENCLAW_SESSION_KEY`: Optional tool session context. Defaults to `main`.
-- `OPENCLAW_TIMEOUT_MS`: Optional request timeout in milliseconds. Defaults to `6000`.
-- `OPENCLAW_MESSAGE_CHANNEL`: Optional header forwarded to Gateway tool calls.
-- `OPENCLAW_ACCOUNT_ID`: Optional header forwarded to Gateway tool calls.
-- `OPENCLAW_ENABLED`: Set to `false` to disable OpenClaw integration.
-- `OPENCLAW_CONFIG_FILE`: Optional custom path to a local config JSON file.
-
-When `OPENCLAW_URL` is not set, the backend falls back to mock room data.
-
-If you want to explicitly import your existing local OpenClaw config into the repo-local config file, run:
+你可以手动复制示例文件，也可以直接导入本机 OpenClaw 配置：
 
 ```powershell
 npm run openclaw:import-config
 ```
 
-That command writes `backend/openclaw.config.local.json`. It is ignored by git.
+这个脚本会写入 `backend/src/openclaw.config.local.json`，该文件已被 Git 忽略。
+
+### 配置字段
+
+- `enabled`：是否启用 OpenClaw 接入
+- `url`：Gateway 地址，支持 `http(s)://`、`ws(s)://`
+- `token`：Gateway Bearer Token
+- `sessionKey`：默认会话上下文
+- `timeoutMs`：请求超时
+- `messageChannel`：透传给 Gateway 的消息通道头
+- `accountId`：透传给 Gateway 的账号头
+- `alertThresholds`：预警阈值
+
+### 环境变量
+
+- `OPENCLAW_URL`
+- `OPENCLAW_TOKEN`
+- `OPENCLAW_SESSION_KEY`
+- `OPENCLAW_TIMEOUT_MS`
+- `OPENCLAW_MESSAGE_CHANNEL`
+- `OPENCLAW_ACCOUNT_ID`
+- `OPENCLAW_ENABLED`
+- `OPENCLAW_CONFIG_FILE`
+
+## 远程 Gateway 注意事项
+
+如果你接的是远程 OpenClaw Gateway，而不是本机 loopback：
+
+- 推荐使用 `wss://`
+- 或者使用 SSH 隧道 / Tailscale
+- 如果远程只开放了明文 `ws://`，新版 OpenClaw 会拒绝读取 `status / health / system-presence`
+- 即使放开明文访问，远程端也可能还需要 `devices approve` 才能完成配对
+
+看板遇到这类情况时会显示：
+
+- `网关部分可用`
+- 预警 `远程 Gateway 需要安全接入`
+- 渠道健康、连接来源、部分令牌统计显示为 `--`
+
+## 验证
+
+```powershell
+npm run verify
+```
+
+包含：
+
+- backend lint/build/test
+- frontend lint/build/test
+- smoke test
+
+## 截图
+
+如果需要生成生产态截图：
+
+```powershell
+npm run screenshots:prod:install
+npm run screenshots:prod
+```
+
+## 当前版本
+
+- `v0.1.0`

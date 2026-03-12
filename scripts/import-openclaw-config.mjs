@@ -4,7 +4,7 @@ import path from 'node:path'
 
 const rootDir = process.cwd()
 const sourcePath = path.join(os.homedir(), '.openclaw', 'openclaw.json')
-const targetPath = path.join(rootDir, 'backend', 'openclaw.config.local.json')
+const targetPath = path.join(rootDir, 'backend', 'src', 'openclaw.config.local.json')
 const force = process.argv.includes('--force')
 
 if (!fs.existsSync(sourcePath)) {
