@@ -147,6 +147,21 @@ npm run screenshots:prod:install
 npm run screenshots:prod
 ```
 
+生成后的文件会放在：
+
+- `docs/screenshots/overview-v0.1.0.png`
+- `docs/screenshots/agent-detail-v0.1.0.png`
+
+## 预览
+
+### 概览页
+
+![Dashboard overview](docs/screenshots/overview-v0.1.0.png)
+
+### 角色详情
+
+![Agent detail](docs/screenshots/agent-detail-v0.1.0.png)
+
 ## 当前版本
 
 - `v0.1.0`
