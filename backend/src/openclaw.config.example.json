@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "url": "http://127.0.0.1:18789",
+  "token": "replace-with-your-openclaw-token",
+  "sessionKey": "agent:main:main",
+  "timeoutMs": 6000,
+  "messageChannel": "",
+  "accountId": "",
+  "alertThresholds": {
+    "agentStaleWarningMs": 600000,
+    "agentStaleCriticalMs": 1800000,
+    "tokenWarningPercent": 80,
+    "tokenCriticalPercent": 90
+  }
+}

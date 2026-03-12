@@ -1,0 +1,378 @@
+.studyroom-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.studyroom-bookcase,
+.studyroom-shelf,
+.studyroom-pinboard,
+.studyroom-note,
+.studyroom-pin,
+.studyroom-lamp,
+.studyroom-light,
+.studyroom-desk-surface,
+.studyroom-open-book,
+.studyroom-notebook,
+.studyroom-book-stack,
+.studyroom-pen-cup,
+.studyroom-desk-front,
+.studyroom-drawer,
+.studyroom-chair {
+  position: absolute;
+}
+
+.studyroom-bookcase {
+  left: 4px;
+  top: 16px;
+  width: 20px;
+  height: 58px;
+  background:
+    linear-gradient(180deg, rgba(255, 235, 205, 0.14), rgba(255, 235, 205, 0) 22%),
+    repeating-linear-gradient(90deg, #805534 0 6px, #6d4629 6px 12px, #5a381f 12px 14px),
+    linear-gradient(180deg, #91663d 0%, #5e3b21 100%);
+  box-shadow:
+    0 0 0 2px rgba(75, 47, 23, 0.82) inset,
+    0 2px 0 rgba(36, 22, 12, 0.18);
+}
+
+.studyroom-bookcase::before {
+  content: '';
+  position: absolute;
+  inset: 4px 3px 4px 3px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #7d5163 0 3px,
+      #4d6785 3px 6px,
+      #b98b52 6px 9px,
+      #516d4b 9px 12px,
+      transparent 12px 14px
+    );
+  opacity: 0.86;
+}
+
+.studyroom-shelf {
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  background: linear-gradient(90deg, #d2ab73 0%, #84562e 100%);
+}
+
+.studyroom-shelf-top {
+  top: 16px;
+}
+
+.studyroom-shelf-mid {
+  top: 30px;
+}
+
+.studyroom-shelf-bottom {
+  top: 44px;
+}
+
+.studyroom-pinboard {
+  left: 30px;
+  top: 14px;
+  width: 52px;
+  height: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 230, 192, 0.16), rgba(255, 230, 192, 0) 24%),
+    linear-gradient(180deg, #b88d5f 0%, #7a5432 100%);
+  box-shadow:
+    0 0 0 2px rgba(98, 64, 35, 0.84) inset,
+    0 1px 0 rgba(245, 215, 172, 0.18) inset;
+}
+
+.studyroom-note {
+  top: 5px;
+  width: 16px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, #efe0bb 0%, #cbb88a 100%);
+  box-shadow: 0 0 0 1px rgba(115, 86, 48, 0.46);
+}
+
+.studyroom-note-left {
+  left: 8px;
+  transform: rotate(-4deg);
+}
+
+.studyroom-note-right {
+  right: 9px;
+  transform: rotate(5deg);
+}
+
+.studyroom-pin {
+  top: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ff786d 0%, #b83835 100%);
+  box-shadow: 0 0 0 1px rgba(95, 25, 24, 0.5);
+}
+
+.studyroom-pin-a {
+  left: 14px;
+}
+
+.studyroom-pin-b {
+  right: 14px;
+}
+
+.studyroom-lamp {
+  right: 10px;
+  top: 24px;
+  width: 22px;
+  height: 28px;
+}
+
+.studyroom-lamp::before,
+.studyroom-lamp::after {
+  content: '';
+  position: absolute;
+}
+
+.studyroom-lamp::before {
+  right: 0;
+  top: 0;
+  width: 16px;
+  height: 10px;
+  background: linear-gradient(180deg, #f7cc86 0%, #b6793d 100%);
+  box-shadow: 0 0 0 1px rgba(124, 81, 36, 0.52);
+}
+
+.studyroom-lamp::after {
+  right: 6px;
+  top: 10px;
+  width: 3px;
+  height: 16px;
+  background: linear-gradient(180deg, #c7c1b6 0%, #746d62 100%);
+}
+
+.studyroom-light {
+  right: -14px;
+  top: -2px;
+  width: 52px;
+  height: 44px;
+  background: radial-gradient(circle, rgba(255, 212, 144, 0.2) 0%, rgba(255, 212, 144, 0.08) 38%, transparent 74%);
+  filter: blur(2px);
+}
+
+.studyroom-desk-surface {
+  left: 18px;
+  right: 10px;
+  top: 52px;
+  height: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 235, 205, 0.14), rgba(255, 235, 205, 0) 22%),
+    repeating-linear-gradient(90deg, #8a5d39 0 16px, #744b2d 16px 32px, #5f3c23 32px 36px),
+    linear-gradient(180deg, #9a6f46 0%, #5f3c22 100%);
+  box-shadow:
+    0 0 0 2px rgba(77, 48, 23, 0.82) inset,
+    0 3px 0 rgba(34, 21, 11, 0.22);
+  z-index: 3;
+}
+
+.studyroom-open-book,
+.studyroom-notebook,
+.studyroom-book-stack,
+.studyroom-pen-cup {
+  bottom: 4px;
+}
+
+.studyroom-open-book {
+  left: 50%;
+  width: 36px;
+  height: 12px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 32%),
+    linear-gradient(180deg, #eee5d0 0%, #cbc0a4 100%);
+  box-shadow: 0 0 0 1px rgba(123, 97, 64, 0.58);
+}
+
+.studyroom-open-book::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(151, 123, 82, 0.38);
+}
+
+.studyroom-open-book::after {
+  content: '';
+  position: absolute;
+  inset: 2px 3px;
+  background:
+    repeating-linear-gradient(180deg, rgba(143, 123, 87, 0.42) 0 1px, transparent 1px 3px);
+  opacity: 0.7;
+}
+
+.studyroom-notebook {
+  left: 10px;
+  width: 18px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, #566f97 0%, #334560 100%);
+  box-shadow: 0 0 0 1px rgba(39, 49, 69, 0.82);
+}
+
+.studyroom-notebook::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 2px;
+  height: 1px;
+  background: rgba(222, 236, 255, 0.32);
+}
+
+.studyroom-book-stack {
+  right: 22px;
+  width: 16px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, #8a5e4b 0%, #5c392f 100%);
+  box-shadow: 0 0 0 1px rgba(71, 45, 38, 0.8);
+}
+
+.studyroom-book-stack::before,
+.studyroom-book-stack::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  box-shadow: 0 0 0 1px rgba(71, 45, 38, 0.72);
+}
+
+.studyroom-book-stack::before {
+  top: -4px;
+  background: linear-gradient(180deg, #6a7fa8 0%, #46597b 100%);
+}
+
+.studyroom-book-stack::after {
+  top: -8px;
+  background: linear-gradient(180deg, #b19060 0%, #7f613d 100%);
+}
+
+.studyroom-pen-cup {
+  right: 6px;
+  width: 10px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, #5d6b4f 0%, #37402c 100%);
+  box-shadow: 0 0 0 1px rgba(43, 50, 34, 0.82);
+}
+
+.studyroom-pen-cup::before,
+.studyroom-pen-cup::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  width: 2px;
+  height: 8px;
+}
+
+.studyroom-pen-cup::before {
+  left: 3px;
+  background: linear-gradient(180deg, #d6c2a2 0%, #8a6f49 100%);
+}
+
+.studyroom-pen-cup::after {
+  right: 3px;
+  background: linear-gradient(180deg, #8bc0d8 0%, #4b6e80 100%);
+}
+
+.studyroom-desk-front {
+  left: 24px;
+  right: 10px;
+  top: 77px;
+  height: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 231, 190, 0.12), rgba(255, 231, 190, 0) 24%),
+    repeating-linear-gradient(90deg, #815636 0 18px, #6f482c 18px 36px, #5b391f 36px 40px),
+    linear-gradient(180deg, #8c6038 0%, #59371d 100%);
+  box-shadow:
+    0 0 0 2px rgba(72, 44, 21, 0.84) inset,
+    0 -2px 0 rgba(233, 195, 138, 0.12) inset;
+  z-index: 2;
+}
+
+.studyroom-drawer {
+  top: 3px;
+  width: 26px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 231, 190, 0.1), rgba(255, 231, 190, 0) 28%),
+    linear-gradient(180deg, #a1744b 0%, #6d4628 100%);
+  box-shadow: 0 0 0 1px rgba(82, 51, 23, 0.82);
+}
+
+.studyroom-drawer::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 8px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #d7b27a 0%, #8e6537 100%);
+}
+
+.studyroom-drawer-left {
+  left: 8px;
+}
+
+.studyroom-drawer-right {
+  right: 8px;
+}
+
+.studyroom-chair {
+  left: 50%;
+  bottom: -8px;
+  width: 28px;
+  height: 30px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(255, 234, 200, 0.16), rgba(255, 234, 200, 0) 30%) center 0 / 18px 12px no-repeat,
+    linear-gradient(180deg, #b78d61 0%, #724d2f 100%) center 0 / 18px 12px no-repeat,
+    linear-gradient(180deg, rgba(255, 234, 200, 0.12), rgba(255, 234, 200, 0) 28%) center 14px / 22px 7px no-repeat,
+    linear-gradient(180deg, #c39b6d 0%, #825734 100%) center 14px / 22px 7px no-repeat,
+    linear-gradient(180deg, #8d6844 0%, #563820 100%) 6px 20px / 3px 10px no-repeat,
+    linear-gradient(180deg, #8d6844 0%, #563820 100%) calc(100% - 6px) 20px / 3px 10px no-repeat;
+}
+
+.studyroom-chair::before,
+.studyroom-chair::after {
+  content: '';
+  position: absolute;
+}
+
+.studyroom-chair::before {
+  left: 50%;
+  top: 3px;
+  width: 10px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: #ead7b3;
+  box-shadow:
+    0 4px 0 #d0b184,
+    0 8px 0 #b58c60;
+}
+
+.studyroom-chair::after {
+  left: 50%;
+  bottom: 3px;
+  width: 18px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #764e2f 0%, #ba9262 50%, #764e2f 100%);
+}

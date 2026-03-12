@@ -1,0 +1,166 @@
+.studydesk-shell {
+  position: absolute;
+  inset: 12px 12px auto 12px;
+  min-height: 118px;
+  pointer-events: none;
+}
+
+.studydesk-lamp {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  width: 50px;
+  height: 74px;
+}
+
+.studydesk-lamp::before,
+.studydesk-lamp::after,
+.studydesk-light,
+.studydesk-board::before,
+.studydesk-board::after,
+.studydesk-magnifier::before {
+  content: '';
+  position: absolute;
+}
+
+.studydesk-lamp::before {
+  right: 8px;
+  top: 6px;
+  width: 24px;
+  height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255, 225, 173, 0.95), rgba(255, 186, 111, 0.55));
+}
+
+.studydesk-lamp::after {
+  right: 18px;
+  top: 20px;
+  width: 3px;
+  height: 38px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(204, 191, 173, 0.9), rgba(90, 85, 78, 0.84));
+}
+
+.studydesk-light {
+  right: -10px;
+  top: 12px;
+  width: 82px;
+  height: 82px;
+  border-radius: 8px;
+  background: radial-gradient(circle, rgba(255, 214, 144, 0.18) 0%, rgba(255, 214, 144, 0.08) 36%, transparent 72%);
+  filter: blur(2px);
+}
+
+.studydesk-board {
+  position: relative;
+  width: 64%;
+  height: 58px;
+  border-radius: 4px;
+  border: 2px solid rgba(242, 212, 173, 0.18);
+  background: linear-gradient(180deg, rgba(42, 31, 25, 0.96), rgba(23, 19, 17, 0.94));
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.02);
+}
+
+.studydesk-board::before {
+  left: 12px;
+  top: 10px;
+  width: 18px;
+  height: 8px;
+  border-radius: 2px;
+  background: rgba(255, 214, 149, 0.72);
+}
+
+.studydesk-board::after {
+  right: 10px;
+  bottom: -12px;
+  width: 62px;
+  height: 8px;
+  border-radius: 2px;
+  background: rgba(83, 68, 62, 0.82);
+}
+
+.studydesk-line {
+  position: absolute;
+  left: 12px;
+  right: 14px;
+  height: 5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 227, 176, 0.82), rgba(255, 227, 176, 0.16));
+}
+
+.studydesk-line-primary { top: 16px; }
+.studydesk-line-secondary { top: 28px; right: 36px; opacity: 0.76; }
+.studydesk-line-note {
+  top: 40px;
+  right: 64px;
+  background: linear-gradient(90deg, rgba(140, 208, 255, 0.64), rgba(140, 208, 255, 0.12));
+}
+
+.studydesk-book-stack {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+
+.studydesk-book {
+  display: inline-block;
+  width: 16px;
+  border-radius: 3px;
+}
+
+.studydesk-book-a { height: 24px; background: linear-gradient(180deg, #8f5e52, #55363a); }
+.studydesk-book-b { height: 18px; background: linear-gradient(180deg, #526b92, #2c3c61); }
+.studydesk-book-c { height: 14px; background: linear-gradient(180deg, #9c8662, #5d4a33); }
+
+.studydesk-pages {
+  position: absolute;
+  right: 72px;
+  bottom: 10px;
+  width: 58px;
+  height: 26px;
+}
+
+.studydesk-page {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 22px;
+  border: 1px solid rgba(255, 237, 210, 0.22);
+  border-radius: 3px;
+  background: linear-gradient(180deg, rgba(245, 233, 212, 0.92), rgba(196, 181, 155, 0.82));
+}
+
+.studydesk-page-left { left: 0; transform: rotate(-7deg); }
+.studydesk-page-right { right: 0; transform: rotate(8deg); }
+
+.studydesk-magnifier {
+  position: absolute;
+  right: 18px;
+  bottom: 8px;
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(163, 215, 255, 0.72);
+  border-radius: 999px;
+}
+
+.studydesk-magnifier::before {
+  right: -7px;
+  bottom: -8px;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  transform: rotate(42deg);
+  background: rgba(163, 215, 255, 0.72);
+}
+
+.studydesk-base {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 10px;
+  border-top: 2px solid rgba(214, 176, 126, 0.22);
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(173, 124, 76, 0.14), rgba(173, 124, 76, 0.02));
+}

@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "prod": "node src/prod-server.js",
+    "build": "node scripts/check-src.mjs",
+    "lint": "node scripts/check-src.mjs",
+    "test": "node --test src/providers/openclaw/alerts.test.js src/providers/openclaw/normalizers.test.js src/providers/openclaw/room-state.test.js"
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/static": "^9.0.0",
+    "fastify": "^5.8.2"
+  }
+}

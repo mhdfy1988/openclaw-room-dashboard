@@ -1,0 +1,324 @@
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px 18px;
+  background: rgba(6, 8, 18, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+.settings-dialog {
+  width: min(820px, 100%);
+  max-height: calc(100vh - 72px);
+  overflow: auto;
+  padding: 22px;
+  border: 1px solid rgba(153, 170, 245, 0.26);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(134, 157, 246, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(20, 25, 50, 0.98), rgba(10, 13, 28, 0.98));
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42);
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.settings-kicker {
+  margin: 0 0 6px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9caeed;
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.settings-close,
+.settings-token-row button,
+.settings-actions button,
+.settings-token-meta button {
+  border: 1px solid rgba(158, 176, 248, 0.26);
+  border-radius: 999px;
+  background: rgba(26, 31, 60, 0.72);
+  color: #eef1ff;
+  cursor: pointer;
+}
+
+.settings-close {
+  padding: 9px 14px;
+}
+
+.settings-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.settings-status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(12, 16, 34, 0.72);
+  border: 1px solid rgba(130, 148, 227, 0.16);
+}
+
+.settings-status-card span,
+.settings-footer-copy span,
+.settings-field span {
+  color: #aeb8e8;
+  font-size: 13px;
+}
+
+.settings-status-card strong,
+.settings-footer-copy strong {
+  color: #f6f8ff;
+  word-break: break-word;
+}
+
+.settings-message,
+.settings-error,
+.settings-notice,
+.settings-warning {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.settings-message {
+  background: rgba(82, 97, 161, 0.2);
+}
+
+.settings-error {
+  color: #ffd7d4;
+  background: rgba(120, 32, 32, 0.28);
+  border: 1px solid rgba(255, 120, 108, 0.22);
+}
+
+.settings-warning {
+  color: #fff0c8;
+  background: rgba(133, 91, 22, 0.28);
+  border: 1px solid rgba(241, 196, 102, 0.22);
+}
+
+.settings-notice {
+  color: #ebf4d8;
+  background: rgba(70, 112, 50, 0.28);
+  border: 1px solid rgba(145, 210, 122, 0.2);
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.settings-section {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(130, 148, 227, 0.16);
+  background: rgba(10, 14, 30, 0.56);
+}
+
+.settings-section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.settings-section-header h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.settings-section-header p,
+.settings-inline-note {
+  margin: 0;
+  color: #b6c1ee;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.settings-inline-hint {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(59, 92, 152, 0.24);
+  color: #dce7ff;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.settings-inline-button {
+  padding: 10px 14px;
+  border: 1px solid rgba(158, 176, 248, 0.26);
+  border-radius: 999px;
+  background: rgba(26, 31, 60, 0.72);
+  color: #eef1ff;
+  cursor: pointer;
+}
+
+.settings-threshold-grid {
+  margin-top: 14px;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-field-full {
+  grid-column: 1 / -1;
+}
+
+.settings-field-checkbox {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(14, 19, 39, 0.72);
+}
+
+.settings-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(144, 161, 236, 0.2);
+  border-radius: 14px;
+  color: #f7f8ff;
+  background: rgba(8, 11, 23, 0.72);
+}
+
+.settings-token-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.settings-token-row button,
+.settings-actions button,
+.settings-token-meta button {
+  padding: 0 14px;
+}
+
+.settings-token-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  font-size: 13px;
+  color: #b8c1ea;
+}
+
+.settings-token-meta .danger {
+  border-color: rgba(255, 125, 125, 0.32);
+  color: #ffd4d4;
+}
+
+.settings-test-result {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(17, 48, 34, 0.5);
+  border: 1px solid rgba(110, 197, 152, 0.22);
+}
+
+.settings-test-result span {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9ee2bc;
+}
+
+.settings-test-result strong,
+.settings-test-result p {
+  display: block;
+  margin: 0;
+}
+
+.settings-test-result p {
+  margin-top: 6px;
+  color: #c9f5dc;
+}
+
+.settings-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-end;
+  margin-top: 22px;
+}
+
+.settings-footer-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.settings-actions button {
+  padding: 11px 18px;
+}
+
+.settings-actions .primary {
+  background: linear-gradient(180deg, #f0d37b, #c39a34);
+  color: #281500;
+  border-color: rgba(240, 211, 123, 0.55);
+}
+
+.settings-actions .secondary {
+  background: rgba(27, 33, 64, 0.92);
+}
+
+@media (max-width: 760px) {
+  .settings-overlay {
+    padding: 18px 10px;
+  }
+
+  .settings-dialog {
+    padding: 18px;
+    max-height: calc(100vh - 36px);
+  }
+
+  .settings-status-grid,
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-footer,
+  .settings-token-meta,
+  .settings-section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .settings-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+}

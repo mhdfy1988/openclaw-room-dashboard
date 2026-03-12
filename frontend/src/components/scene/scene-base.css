@@ -1,0 +1,586 @@
+.room-panel {
+  background: #0c1020;
+  border: 2px solid #2d3b6b;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px #11182d inset;
+  padding: 16px;
+}
+
+.room-scene {
+  position: relative;
+  min-height: 820px;
+  overflow: hidden;
+  border: 3px solid #40539a;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #6f82c2 0%, #445286 18%, #27314f 44%, #161c2f 100%);
+}
+
+.room-scene.night {
+  background: linear-gradient(180deg, #405090 0%, #293464 22%, #17203b 50%, #0d1120 100%);
+}
+
+.pixel-art-surface {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  transform-origin: center;
+}
+
+.scene-asset-layer,
+.zone-asset-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scene-backdrop,
+.house-shell,
+.house-roof-shadow,
+.scene-prop,
+.scene-character,
+.room-block,
+.thick-wall,
+.door-hole,
+.floor-tiles,
+.horizontal-wall,
+.hall-strip,
+.wall-trim {
+  position: absolute;
+}
+
+.scene-backdrop {
+  inset: 0;
+  overflow: hidden;
+}
+
+.scene-prop-center-console {
+  left: 33%;
+  top: 18.5%;
+  width: 34%;
+  height: 17%;
+  z-index: 4;
+}
+
+.scene-prop-work-desk {
+  left: 8.8%;
+  top: 23%;
+  width: 20.4%;
+  height: 15.8%;
+  z-index: 4;
+}
+
+.scene-prop-study-desk {
+  right: 8.8%;
+  top: 23%;
+  width: 20.4%;
+  height: 15.8%;
+  z-index: 4;
+}
+
+.scene-prop-sofa {
+  left: 10.5%;
+  top: calc(65.2% + 20px);
+  width: 27.5%;
+  height: 15.5%;
+  z-index: 4;
+}
+
+.scene-prop-bed {
+  right: 15.2%;
+  top: 62.2%;
+  width: 20%;
+  height: 22%;
+  z-index: 4;
+}
+
+.scene-prop-center-console .zone-asset-layer {
+  transform: scale(0.9);
+  transform-origin: top center;
+}
+
+.scene-prop-work-desk .zone-asset-layer {
+  transform: scale(0.94);
+  transform-origin: top left;
+}
+
+.scene-prop-study-desk .zone-asset-layer {
+  transform: scale(0.94);
+  transform-origin: top right;
+}
+
+.scene-prop-sofa .zone-asset-layer {
+  transform: scale(0.8);
+  transform-origin: top left;
+}
+
+.scene-prop-bed .zone-asset-layer {
+  transform: scaleX(0.9) scaleY(1.4);
+  transform-origin: top center;
+}
+
+.scene-character-console {
+  left: 43.8%;
+  top: 10.8%;
+  width: 12%;
+  height: 13.5%;
+  z-index: 4;
+}
+
+.scene-character-work {
+  left: 14.2%;
+  top: 25.2%;
+  width: 9%;
+  height: 12.5%;
+  z-index: 5;
+}
+
+.scene-character-study {
+  right: 14.2%;
+  top: 25.2%;
+  width: 9%;
+  height: 12.5%;
+  z-index: 5;
+}
+
+.scene-character-sofa {
+  left: 18.5%;
+  top: 67.4%;
+  width: 10%;
+  height: 12.5%;
+  z-index: 5;
+}
+
+.scene-character .pixel-person-layer {
+  transform: scale(0.9);
+  transform-origin: bottom center;
+}
+
+.house-shell {
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  bottom: 6%;
+  z-index: 1;
+  border: 4px solid #5c3c22;
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 236, 202, 0.18), rgba(255, 236, 202, 0) 22%),
+    repeating-linear-gradient(
+      90deg,
+      #9a6c42 0 22px,
+      #845932 22px 44px,
+      #704728 44px 48px
+    ),
+    linear-gradient(180deg, #9c7045 0%, #764c2d 100%);
+  box-shadow:
+    0 0 0 4px #c08d59 inset,
+    0 0 0 10px rgba(56, 31, 15, 0.22) inset;
+}
+
+.house-roof-shadow {
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  height: 7%;
+  background: linear-gradient(180deg, rgba(16, 22, 42, 0.34), rgba(16, 22, 42, 0));
+}
+
+.room-block {
+  z-index: 2;
+  border: 4px solid rgba(226, 234, 255, 0.68);
+  box-shadow: 0 0 0 3px rgba(39, 46, 74, 0.72) inset;
+}
+
+.room-block-console {
+  left: 30%;
+  top: 8%;
+  width: 40%;
+  height: 24%;
+  background: #34507b;
+}
+
+.room-block-work {
+  left: 8%;
+  top: 17%;
+  width: 22%;
+  height: 24%;
+  background: #4f597f;
+}
+
+.room-block-study {
+  right: 8%;
+  top: 17%;
+  width: 22%;
+  height: 24%;
+  background: #6d5642;
+}
+
+.room-block-sofa {
+  left: 8%;
+  bottom: 10%;
+  width: 35%;
+  height: 22%;
+  background: #584768;
+}
+
+.room-block-bed {
+  right: 8%;
+  bottom: 10%;
+  width: 35%;
+  height: 22%;
+  background: #46526f;
+}
+
+.thick-wall {
+  z-index: 5;
+  background:
+    linear-gradient(180deg, rgba(255, 236, 202, 0.18), rgba(255, 236, 202, 0) 26%),
+    repeating-linear-gradient(
+      180deg,
+      #976a40 0 14px,
+      #7f552f 14px 28px,
+      #694121 28px 32px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(66, 37, 18, 0.34) 0 2px,
+      rgba(66, 37, 18, 0) 2px 10px,
+      rgba(255, 224, 176, 0.12) 10px 12px,
+      rgba(255, 224, 176, 0) 12px 16px
+    ),
+    linear-gradient(180deg, #9d6f45 0%, #744829 100%);
+  background-size: auto, auto, auto, auto;
+  box-shadow:
+    0 0 0 2px rgba(56, 31, 15, 0.72) inset,
+    0 0 0 5px rgba(199, 146, 89, 0.22) inset,
+    0 2px 0 rgba(35, 20, 10, 0.35);
+}
+
+.thick-wall-left-top {
+  left: 28.8%;
+  top: 8%;
+  width: 22px;
+  height: 31.5%;
+}
+
+.thick-wall-left-bottom {
+  left: 28.8%;
+  top: 51.5%;
+  width: 22px;
+  height: 8.5%;
+}
+
+.thick-wall-right-top {
+  right: 28.8%;
+  top: 8%;
+  width: 22px;
+  height: 31.5%;
+}
+
+.thick-wall-right-bottom {
+  right: 28.8%;
+  top: 51.5%;
+  width: 22px;
+  height: 8.5%;
+}
+
+.thick-wall-bottom-left {
+  left: 36.8%;
+  top: 64.2%;
+  width: 22px;
+  height: 15.2%;
+}
+
+.thick-wall-bottom-right {
+  left: 61.0%;
+  top: 64.2%;
+  width: 22px;
+  height: 15.2%;
+}
+
+.door-hole {
+  z-index: 6;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.08) 35%, rgba(0, 0, 0, 0.22)),
+    repeating-linear-gradient(
+      180deg,
+      #5a3820 0 12px,
+      #3d2414 12px 24px,
+      #24150d 24px 28px
+    );
+  background-size: auto, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(31, 18, 9, 0.82),
+    inset 0 12px 0 rgba(255, 232, 190, 0.08),
+    0 0 0 4px #6e4526,
+    0 -10px 0 0 #8e6037;
+}
+
+.door-hole-left {
+  left: 29.1%;
+  top: 38.8%;
+  width: 18px;
+  height: 12.8%;
+}
+
+.door-hole-right {
+  right: 29.1%;
+  top: 38.8%;
+  width: 18px;
+  height: 12.8%;
+}
+
+.door-hole-bottom {
+  display: none;
+}
+
+.floor-tiles {
+  z-index: 3;
+  background:
+    linear-gradient(rgba(255,255,255,0.08) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 2px, transparent 2px),
+    linear-gradient(180deg, #7f694d 0%, #614d38 100%);
+  background-size: 26px 26px, 26px 26px, auto;
+}
+
+.floor-tiles-top {
+  left: 8%;
+  right: 8%;
+  top: 8%;
+  bottom: 10%;
+}
+
+.floor-tiles-bottom {
+  display: none;
+}
+
+.hall-strip {
+  z-index: 4;
+  background:
+    linear-gradient(rgba(255,255,255,0.08) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 2px, transparent 2px),
+    linear-gradient(180deg, #8a7352 0%, #6a573f 100%);
+  background-size: 24px 24px, 24px 24px, auto;
+}
+
+.hall-strip-left {
+  left: 28%;
+  top: 38%;
+  width: 8%;
+  height: 18%;
+}
+
+.hall-strip-right {
+  right: 28%;
+  top: 38%;
+  width: 8%;
+  height: 18%;
+}
+
+.horizontal-wall {
+  top: calc(61.2% + 5px);
+  height: 34px;
+  z-index: 3;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #9b6d42 0 24px,
+      #83572f 24px 48px,
+      #6e4625 48px 52px
+    ),
+    linear-gradient(180deg, #a8784d 0%, #754928 100%);
+  box-shadow:
+    0 2px 0 rgba(255, 240, 215, 0.35) inset,
+    0 -2px 0 rgba(78, 45, 22, 0.5) inset,
+    0 0 0 2px rgba(96, 61, 31, 0.55) inset;
+}
+
+.horizontal-wall-left {
+  top:60%;
+  left: 8%;
+  width: 31.2%;
+}
+
+.horizontal-wall-center {
+  left: calc(36.8% + 22px);
+  width: calc(24.2% - 22px);
+}
+
+.horizontal-wall-right {
+    top:60%;
+  right: 8%;
+  width: 31.2%;
+}
+
+.hall-strip-bottom-left {
+  left: 8%;
+  bottom: 22%;
+  width: 31.2%;
+  height: 12%;
+}
+
+.hall-strip-bottom-right {
+  right: 8%;
+  bottom: 22%;
+  width: 31.2%;
+  height: 12%;
+}
+
+.hall-strip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 35%);
+}
+
+.wall-trim {
+  z-index: 7;
+  left: 8%;
+  right: 8%;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 232, 196, 0.72), rgba(135, 88, 48, 0.88));
+  box-shadow:
+    0 1px 0 rgba(255, 243, 220, 0.45) inset,
+    0 -1px 0 rgba(70, 39, 18, 0.5) inset;
+}
+
+.wall-trim-top { top: 8%; }
+.wall-trim-mid-left {
+  top: 60%;
+  left: 8%;
+  right: auto;
+  width: 31.2%;
+}
+
+.wall-trim-mid-right {
+  top: 60%;
+  left: auto;
+  right: 8%;
+  width: 31.2%;
+}
+
+.wall-trim-mid-inner-left {
+  top: calc(60% + 44px);
+  left: 8%;
+  right: auto;
+  width: 31.2%;
+}
+
+.wall-trim-mid-inner-right {
+  top: calc(60% + 44px);
+  left: auto;
+  right: 8%;
+  width: 31.2%;
+}
+.wall-trim-bottom { bottom: 10%; }
+
+.room-space {
+  position: absolute;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.room-space-console {
+  top: 12%;
+  left: 32%;
+  width: 36%;
+  height: 18%;
+  align-items: center;
+}
+
+.room-space-work {
+  top: 21%;
+  left: 9%;
+  width: 20%;
+  height: 16%;
+}
+
+.room-space-study {
+  top: 21%;
+  right: 9%;
+  width: 20%;
+  height: 16%;
+}
+
+.room-space-sofa {
+  left: 10%;
+  bottom: 14%;
+  width: 25%;
+  height: 14%;
+}
+
+.room-space-bed {
+  right: 10%;
+  bottom: 14%;
+  width: 25%;
+  height: 14%;
+}
+
+.room-space-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(16, 18, 30, 0.58);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff2ce;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.room-space-content {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.room-space-content-console {
+  width: 100%;
+  justify-content: center;
+}
+
+.room-space .agent-avatar-card {
+  display: inline-flex;
+}
+
+.room-space .room-empty {
+  display: inline-flex;
+}
+
+.room-space-content-study {
+  align-items: flex-start;
+}
+
+.room-empty {
+  padding: 6px 8px;
+  border-radius: 3px;
+  background: rgba(17, 20, 34, 0.58);
+  color: #e6ebff;
+  font-size: 11px;
+}
+
+@media (max-width: 760px) {
+  .room-scene {
+    min-height: auto;
+    display: grid;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .scene-backdrop {
+    display: none;
+  }
+
+  .room-space {
+    position: static;
+    padding: 0;
+  }
+}

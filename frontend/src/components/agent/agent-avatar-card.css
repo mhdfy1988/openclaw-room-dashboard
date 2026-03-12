@@ -1,0 +1,201 @@
+.agent-avatar-card {
+  --avatar-shell: linear-gradient(180deg, rgba(78, 95, 170, 0.96) 0%, rgba(36, 44, 93, 0.98) 100%);
+  --avatar-ring-fill: radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.02) 42%), linear-gradient(180deg, rgba(22, 29, 60, 0.98) 0%, rgba(10, 15, 34, 0.98) 100%);
+  --avatar-ring-glow: rgba(118, 158, 255, 0.34);
+  --avatar-highlight: rgba(255, 231, 170, 0.9);
+  --status-dot: #8ae3d2;
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size, 76px);
+  height: var(--avatar-size, 76px);
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.44);
+  border-radius: 999px;
+  background: var(--avatar-shell);
+  color: #fff7da;
+  cursor: pointer;
+  appearance: none;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.agent-avatar-card::after {
+  content: '';
+  position: absolute;
+  right: var(--avatar-status-offset, 5px);
+  bottom: var(--avatar-status-offset, 5px);
+  width: var(--avatar-status-size, 12px);
+  height: var(--avatar-status-size, 12px);
+  border: 2px solid rgba(9, 12, 24, 0.94);
+  border-radius: 999px;
+  background: var(--status-dot);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.1),
+    0 0 16px color-mix(in srgb, var(--status-dot) 65%, transparent);
+}
+
+.agent-avatar-ring {
+  display: grid;
+  place-items: center;
+  width: var(--avatar-ring-size, 56px);
+  height: var(--avatar-ring-size, 56px);
+  border-radius: 999px;
+  background: var(--avatar-ring-fill);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 12px var(--avatar-ring-glow);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.agent-emoji {
+  font-size: var(--avatar-emoji-size, 30px);
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.agent-name,
+.agent-mini-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.agent-avatar-card:hover,
+.agent-avatar-card.selected {
+  transform: translateY(-3px) scale(1.03);
+  border-color: var(--avatar-highlight);
+  box-shadow:
+    0 14px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(255, 240, 205, 0.05);
+}
+
+.agent-avatar-card:hover .agent-avatar-ring,
+.agent-avatar-card.selected .agent-avatar-ring {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 16px color-mix(in srgb, var(--avatar-ring-glow) 72%, transparent);
+}
+
+.status-idle {
+  --status-dot: #7be6d8;
+}
+
+.status-working {
+  --status-dot: #ffb36c;
+}
+
+.status-thinking {
+  --status-dot: #ffd866;
+}
+
+.status-sleeping {
+  --status-dot: #bda7ff;
+}
+
+.status-offline {
+  --status-dot: #7180a5;
+  filter: grayscale(0.88);
+  opacity: 0.62;
+}
+
+.status-idle .agent-avatar-ring {
+  animation: idleFloat 3.6s ease-in-out infinite;
+}
+
+.status-working .agent-avatar-ring {
+  animation: workingPulse 1.5s ease-in-out infinite;
+}
+
+.status-thinking .agent-avatar-ring {
+  animation: thinkingTilt 2.4s ease-in-out infinite;
+}
+
+.status-sleeping .agent-avatar-ring {
+  animation: sleepingBob 4.2s ease-in-out infinite;
+}
+
+.status-offline .agent-avatar-ring {
+  animation: offlineFlicker 2.8s steps(2, end) infinite;
+}
+
+@keyframes idleFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes workingPulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 0 10px var(--avatar-ring-glow);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 16px color-mix(in srgb, var(--avatar-ring-glow) 78%, rgba(255, 171, 89, 0.22));
+  }
+}
+
+@keyframes thinkingTilt {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-3deg) translateY(-1px);
+  }
+
+  75% {
+    transform: rotate(3deg) translateY(-2px);
+  }
+}
+
+@keyframes sleepingBob {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(3px) scale(0.98);
+  }
+}
+
+@keyframes offlineFlicker {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+
+  40% {
+    opacity: 0.42;
+  }
+
+  60% {
+    opacity: 0.64;
+  }
+}

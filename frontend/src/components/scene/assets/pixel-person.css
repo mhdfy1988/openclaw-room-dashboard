@@ -1,0 +1,44 @@
+.pixel-person-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pixel-person-shell {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 64px;
+  height: 106px;
+  transform: translateX(-50%);
+}
+
+.pixel-person-shadow,
+.pixel-person-sprite {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.pixel-person-shadow {
+  bottom: 0;
+  width: 40px;
+  height: 9px;
+}
+
+.pixel-person-sprite {
+  bottom: 4px;
+  width: 58px;
+  height: 96px;
+}
+
+.pixel-person-sprite-front {
+  width: 60px;
+}
+
+.pixel-person-sprite-left,
+.pixel-person-sprite-right {
+  width: 52px;
+}

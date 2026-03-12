@@ -1,0 +1,204 @@
+.zone {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 3px solid rgba(230, 236, 255, 0.58);
+  background: linear-gradient(180deg, rgba(33, 38, 66, 0.96) 0%, rgba(20, 24, 40, 0.98) 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.05),
+    0 8px 0 rgba(8, 10, 20, 0.86),
+    0 18px 20px rgba(0, 0, 0, 0.22);
+}
+
+.zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02) 28%, transparent 46%);
+  pointer-events: none;
+}
+
+.zone-center-console {
+  overflow: hidden;
+  top: 14%;
+  left: 31%;
+  width: 38%;
+  height: 26%;
+  border-color: #7de9ff;
+  background: linear-gradient(180deg, #163055 0%, #101a31 100%);
+}
+
+.zone-center-console .zone-body {
+  padding-top: 76px;
+  align-items: center;
+}
+
+.zone-work-desk {
+  overflow: hidden;
+  top: 21%;
+  left: 5%;
+  width: 25%;
+  height: 24%;
+  border-color: #9ebfff;
+  background: linear-gradient(180deg, #2a2f52 0%, #171b31 100%);
+}
+
+.zone-work-desk .zone-body {
+  padding-top: 88px;
+}
+
+.zone-study-desk {
+  overflow: hidden;
+  top: 21%;
+  right: 5%;
+  width: 25%;
+  height: 24%;
+  border-color: #ffd9a0;
+  background: linear-gradient(180deg, #4a3528 0%, #241913 100%);
+}
+
+.zone-study-desk .zone-body {
+  padding-top: 94px;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.zone-study-desk .zone-accent-badge {
+  padding: 3px 7px;
+  border-color: rgba(255, 228, 180, 0.36);
+  background: rgba(255, 228, 180, 0.12);
+  color: #ffe3b6;
+  font-size: 10px;
+}
+
+.zone-sofa {
+  left: 8%;
+  bottom: 10%;
+  width: 30%;
+  height: 18%;
+  border-color: #d9adff;
+  background: linear-gradient(180deg, #4b355a 0%, #281d32 100%);
+}
+
+.zone-bed {
+  right: 8%;
+  bottom: 10%;
+  width: 30%;
+  height: 18%;
+  border-color: #c0d0ff;
+  background: linear-gradient(180deg, #394467 0%, #1e2437 100%);
+}
+
+.zone-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zone-header-study {
+  gap: 8px;
+}
+
+.zone-accent-badge {
+  margin-left: auto;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.08);
+  color: #f3f7ff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.zone-header strong {
+  display: block;
+  color: #fff7d8;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+  font-size: 16px;
+}
+
+.zone-header p {
+  margin: 2px 0 0;
+  color: #d6ddff;
+  font-size: 11px;
+}
+
+.zone-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.10);
+  font-size: 14px;
+}
+
+.zone-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.zone-placeholder {
+  padding: 7px 9px;
+  border-radius: 3px;
+  color: #eef2ff;
+  background: rgba(255,255,255,0.12);
+  font-size: 11px;
+}
+
+@media (max-width: 1180px) {
+  .zone-center-console {
+    top: 8%;
+    left: 8%;
+    width: 84%;
+    height: 18%;
+  }
+
+  .zone-work-desk {
+    top: 30%;
+    left: 8%;
+    width: 38%;
+    height: 18%;
+  }
+
+  .zone-study-desk {
+    top: 30%;
+    right: 8%;
+    width: 38%;
+    height: 18%;
+  }
+
+  .zone-sofa {
+    left: 8%;
+    bottom: 8%;
+    width: 38%;
+    height: 18%;
+  }
+
+  .zone-bed {
+    right: 8%;
+    bottom: 8%;
+    width: 38%;
+    height: 18%;
+  }
+}
+
+@media (max-width: 760px) {
+  .zone {
+    position: static;
+    min-height: 170px;
+  }
+}

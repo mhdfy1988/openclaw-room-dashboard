@@ -1,0 +1,353 @@
+.workstudio-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.workstudio-rack,
+.workstudio-rack-led,
+.workstudio-monitor-rig,
+.workstudio-screen,
+.workstudio-speaker,
+.workstudio-desk-surface,
+.workstudio-pad,
+.workstudio-keyboard,
+.workstudio-tablet,
+.workstudio-mouse,
+.workstudio-desk-front,
+.workstudio-drawer,
+.workstudio-tower,
+.workstudio-tower-light,
+.workstudio-stool {
+  position: absolute;
+}
+
+.workstudio-rack {
+  left: 20px;
+  right: 18px;
+  top: 4px;
+  height: 14px;
+  background:
+    linear-gradient(180deg, rgba(226, 241, 255, 0.12), rgba(226, 241, 255, 0) 38%),
+    repeating-linear-gradient(90deg, #3c4a62 0 12px, #2a3447 12px 24px, #1b2431 24px 28px),
+    linear-gradient(180deg, #4a5a74 0%, #273040 100%);
+  box-shadow:
+    0 0 0 2px rgba(17, 25, 38, 0.84) inset,
+    0 1px 0 rgba(201, 223, 255, 0.12) inset;
+}
+
+.workstudio-rack-led {
+  top: 4px;
+  width: 10px;
+  height: 4px;
+  background: linear-gradient(90deg, #6df4ff 0%, #2dc4d7 100%);
+  box-shadow: 0 0 0 1px rgba(22, 57, 65, 0.7);
+}
+
+.workstudio-rack-led-a {
+  left: 16px;
+}
+
+.workstudio-rack-led-b {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.workstudio-rack-led-c {
+  right: 16px;
+}
+
+.workstudio-monitor-rig {
+  left: 18px;
+  right: 40px;
+  top: 18px;
+  display: grid;
+  grid-template-columns: 0.78fr 1.16fr 0.78fr;
+  gap: 6px;
+  align-items: end;
+  z-index: 4;
+}
+
+.workstudio-screen {
+  position: relative;
+  height: 22px;
+  border: 2px solid #18273f;
+  background:
+    linear-gradient(180deg, rgba(214, 245, 255, 0.16), rgba(214, 245, 255, 0) 26%),
+    linear-gradient(180deg, #14385f 0%, #081b30 100%);
+  box-shadow:
+    0 0 0 2px rgba(93, 199, 255, 0.12) inset,
+    0 3px 0 rgba(7, 13, 22, 0.38);
+}
+
+.workstudio-screen::before,
+.workstudio-screen::after {
+  content: '';
+  position: absolute;
+}
+
+.workstudio-screen::before {
+  inset: 4px;
+  background:
+    repeating-linear-gradient(90deg, rgba(93, 249, 255, 0.38) 0 6px, transparent 6px 9px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 48%);
+}
+
+.workstudio-screen::after {
+  left: 50%;
+  bottom: -7px;
+  width: 12px;
+  height: 5px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #677a96 0%, #344458 100%);
+}
+
+.workstudio-screen-left,
+.workstudio-screen-right {
+  margin-top: 7px;
+}
+
+.workstudio-screen-main {
+  height: 30px;
+}
+
+.workstudio-screen-main::before {
+  background:
+    repeating-linear-gradient(90deg, rgba(113, 252, 231, 0.42) 0 7px, transparent 7px 10px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 48%);
+}
+
+.workstudio-speaker {
+  top: 28px;
+  width: 12px;
+  height: 28px;
+  background:
+    linear-gradient(180deg, rgba(221, 236, 255, 0.12), rgba(221, 236, 255, 0) 24%),
+    linear-gradient(180deg, #465570 0%, #293343 100%);
+  box-shadow:
+    0 0 0 2px rgba(22, 28, 39, 0.84) inset,
+    0 2px 0 rgba(7, 12, 20, 0.24);
+}
+
+.workstudio-speaker::before,
+.workstudio-speaker::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1a212d 0%, #0c1017 100%);
+  box-shadow: 0 0 0 1px rgba(88, 109, 138, 0.14) inset;
+}
+
+.workstudio-speaker::before {
+  top: 5px;
+  height: 6px;
+}
+
+.workstudio-speaker::after {
+  bottom: 5px;
+  height: 10px;
+}
+
+.workstudio-speaker-left {
+  left: 4px;
+}
+
+.workstudio-speaker-right {
+  right: 24px;
+}
+
+.workstudio-desk-surface {
+  left: 10px;
+  right: 10px;
+  top: 54px;
+  height: 24px;
+  background:
+    linear-gradient(180deg, rgba(234, 246, 255, 0.1), rgba(234, 246, 255, 0) 24%),
+    repeating-linear-gradient(90deg, #54657a 0 16px, #445264 16px 32px, #34404f 32px 36px),
+    linear-gradient(180deg, #61738a 0%, #3a4657 100%);
+  box-shadow:
+    0 0 0 2px rgba(26, 33, 43, 0.82) inset,
+    0 0 0 5px rgba(176, 205, 235, 0.08) inset,
+    0 3px 0 rgba(10, 14, 22, 0.26);
+  z-index: 3;
+}
+
+.workstudio-pad {
+  left: 20px;
+  right: 18px;
+  top: 6px;
+  height: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 36%),
+    linear-gradient(180deg, #1d2736 0%, #0f151f 100%);
+  box-shadow:
+    0 0 0 1px rgba(12, 18, 27, 0.9),
+    0 0 0 1px rgba(113, 188, 219, 0.08) inset;
+}
+
+.workstudio-keyboard,
+.workstudio-tablet,
+.workstudio-mouse {
+  bottom: 4px;
+}
+
+.workstudio-keyboard {
+  left: 50%;
+  width: 42px;
+  height: 7px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 32%),
+    linear-gradient(180deg, #d3d5da 0%, #8e929a 100%);
+  box-shadow:
+    0 0 0 1px rgba(54, 58, 67, 0.84),
+    0 0 0 1px rgba(243, 246, 251, 0.12) inset;
+}
+
+.workstudio-keyboard::before {
+  content: '';
+  position: absolute;
+  inset: 1px 3px 2px;
+  background:
+    repeating-linear-gradient(90deg, #515866 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(180deg, transparent 0 2px, rgba(42, 48, 58, 0.34) 2px 3px);
+}
+
+.workstudio-tablet {
+  left: 18px;
+  width: 20px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(176, 236, 255, 0.14), rgba(176, 236, 255, 0) 30%),
+    linear-gradient(180deg, #354864 0%, #182233 100%);
+  box-shadow: 0 0 0 1px rgba(15, 21, 31, 0.84);
+}
+
+.workstudio-mouse {
+  right: 18px;
+  width: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #9ab4cf 0%, #4f647d 100%);
+  box-shadow: 0 0 0 1px rgba(32, 42, 57, 0.76);
+}
+
+.workstudio-desk-front {
+  left: 16px;
+  right: 30px;
+  top: 79px;
+  height: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 24%),
+    repeating-linear-gradient(90deg, #49596b 0 18px, #3d4a5a 18px 36px, #313b49 36px 40px),
+    linear-gradient(180deg, #55667a 0%, #36404d 100%);
+  box-shadow:
+    0 0 0 2px rgba(25, 32, 40, 0.84) inset,
+    0 -2px 0 rgba(180, 210, 239, 0.08) inset;
+  z-index: 2;
+}
+
+.workstudio-drawer {
+  top: 3px;
+  width: 30px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(240, 248, 255, 0.08), rgba(240, 248, 255, 0) 30%),
+    linear-gradient(180deg, #617487 0%, #3a4756 100%);
+  box-shadow: 0 0 0 1px rgba(24, 31, 42, 0.88);
+}
+
+.workstudio-drawer::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  width: 10px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #d4b57e 0%, #8e683c 100%);
+}
+
+.workstudio-drawer-left {
+  left: 8px;
+}
+
+.workstudio-drawer-right {
+  right: 8px;
+}
+
+.workstudio-tower {
+  right: 4px;
+  top: 42px;
+  width: 22px;
+  height: 46px;
+  background:
+    linear-gradient(180deg, rgba(232, 244, 255, 0.08), rgba(232, 244, 255, 0) 20%),
+    linear-gradient(180deg, #384355 0%, #1d2430 100%);
+  box-shadow:
+    0 0 0 2px rgba(17, 22, 31, 0.86) inset,
+    0 2px 0 rgba(11, 14, 20, 0.26);
+  z-index: 1;
+}
+
+.workstudio-tower::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 10px;
+  height: 16px;
+  background:
+    repeating-linear-gradient(180deg, rgba(149, 170, 198, 0.16) 0 2px, transparent 2px 4px);
+}
+
+.workstudio-tower-light {
+  left: 8px;
+  bottom: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #7effd1 0%, #22bb88 100%);
+  box-shadow: 0 0 0 1px rgba(17, 61, 48, 0.7);
+}
+
+.workstudio-stool {
+  left: 50%;
+  bottom: -8px;
+  width: 30px;
+  height: 30px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(233, 241, 255, 0.14), rgba(233, 241, 255, 0) 30%) center 2px / 18px 12px no-repeat,
+    linear-gradient(180deg, #5f7190 0%, #2f3c56 100%) center 2px / 18px 12px no-repeat,
+    linear-gradient(180deg, rgba(233, 241, 255, 0.12), rgba(233, 241, 255, 0) 30%) center 15px / 22px 7px no-repeat,
+    linear-gradient(180deg, #6f85aa 0%, #3b4a67 100%) center 15px / 22px 7px no-repeat,
+    linear-gradient(180deg, #4a5c78 0%, #273344 100%) 3px 16px / 4px 8px no-repeat,
+    linear-gradient(180deg, #4a5c78 0%, #273344 100%) calc(100% - 3px) 16px / 4px 8px no-repeat;
+}
+
+.workstudio-stool::before,
+.workstudio-stool::after {
+  content: '';
+  position: absolute;
+}
+
+.workstudio-stool::before {
+  left: 50%;
+  bottom: 5px;
+  width: 4px;
+  height: 10px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #8198ba 0%, #3b4a61 100%);
+}
+
+.workstudio-stool::after {
+  left: 50%;
+  bottom: 0;
+  width: 26px;
+  height: 5px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #3f5068 0%, #9fb3cb 50%, #3f5068 100%);
+}

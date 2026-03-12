@@ -1,0 +1,417 @@
+.console-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.console-desk-shadow,
+.console-support,
+.console-chair,
+.console-chair-back,
+.console-chair-seat,
+.console-desk-surface,
+.console-desk-trim,
+.console-control-strip,
+.console-module,
+.console-keyboard,
+.console-desk-front,
+.console-sidecar {
+  position: absolute;
+}
+
+.console-desk-shadow {
+  left: 20px;
+  right: 20px;
+  top: 98px;
+  height: 12px;
+  background: linear-gradient(180deg, rgba(4, 10, 22, 0.14), rgba(4, 10, 22, 0.42));
+  filter: blur(1px);
+}
+
+.console-monitor-rig {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 12px;
+  display: grid;
+  grid-template-columns: 0.88fr 1.22fr 0.88fr;
+  gap: 8px;
+  align-items: end;
+  z-index: 5;
+}
+
+.console-monitor {
+  position: relative;
+  height: 22px;
+  border: 2px solid #16253f;
+  background:
+    linear-gradient(180deg, rgba(186, 239, 255, 0.2), rgba(186, 239, 255, 0) 24%),
+    linear-gradient(180deg, #14345c 0%, #08182c 100%);
+  box-shadow:
+    0 0 0 2px rgba(104, 202, 255, 0.14) inset,
+    0 4px 0 rgba(8, 15, 27, 0.44);
+}
+
+.console-monitor::before,
+.console-monitor::after {
+  content: '';
+  position: absolute;
+}
+
+.console-monitor::before {
+  inset: 4px;
+  background:
+    repeating-linear-gradient(90deg, rgba(104, 244, 255, 0.42) 0 8px, transparent 8px 12px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 52%);
+}
+
+.console-monitor::after {
+  display: none;
+}
+
+.console-monitor-left,
+.console-monitor-right {
+  margin-top: 6px;
+}
+
+.console-monitor-center {
+  height: 28px;
+}
+
+.console-monitor-center::before {
+  background:
+    repeating-linear-gradient(90deg, rgba(102, 251, 231, 0.42) 0 9px, transparent 9px 13px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 52%);
+}
+
+.console-support {
+  display: none;
+}
+
+.console-chair {
+  left: 50%;
+  top: 120px;
+  width: 58px;
+  height: 52px;
+  transform: translateX(-50%);
+  z-index: 6;
+}
+
+.console-chair::before,
+.console-chair::after,
+.console-chair-back::before,
+.console-chair-back::after,
+.console-chair-seat::before,
+.console-chair-seat::after {
+  content: '';
+  position: absolute;
+}
+
+.console-chair-back {
+  left: 10px;
+  right: 10px;
+  top: 0;
+  height: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, #45557e 0%, #232d47 100%);
+  box-shadow:
+    0 0 0 2px rgba(155, 174, 225, 0.2) inset,
+    0 3px 0 rgba(8, 10, 18, 0.24);
+}
+
+.console-chair-back::before {
+  left: 10px;
+  right: 10px;
+  top: -8px;
+  height: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #556893 0%, #2a3450 100%);
+  box-shadow:
+    0 0 0 2px rgba(178, 194, 235, 0.18) inset,
+    0 2px 0 rgba(7, 10, 18, 0.22);
+}
+
+.console-chair-back::after {
+  left: 50%;
+  top: 5px;
+  width: 4px;
+  bottom: 4px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(188, 206, 242, 0.18), rgba(56, 69, 101, 0.16));
+}
+
+.console-chair-seat {
+  left: 8px;
+  right: 8px;
+  top: 26px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, #5b6f9e 0%, #31405f 100%);
+  box-shadow:
+    0 0 0 2px rgba(164, 180, 223, 0.16) inset,
+    0 2px 0 rgba(6, 10, 16, 0.18);
+}
+
+.console-chair-seat::before,
+.console-chair-seat::after {
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  background: linear-gradient(180deg, #6b7fae 0%, #394966 100%);
+}
+
+.console-chair-seat::before {
+  left: -5px;
+}
+
+.console-chair-seat::after {
+  right: -5px;
+}
+
+.console-chair::before {
+  left: 50%;
+  bottom: 4px;
+  width: 5px;
+  height: 10px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #8299bb 0%, #3c4c63 100%);
+}
+
+.console-chair::after {
+  left: 50%;
+  bottom: 0;
+  width: 28px;
+  height: 4px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #3f4f68 0%, #9fb2ca 50%, #3f4f68 100%);
+}
+
+.console-desk-surface {
+  left: 16px;
+  right: 16px;
+  top: 44px;
+  height: 30px;
+  background:
+    repeating-linear-gradient(90deg, #7f5631 0 16px, #6d4728 16px 32px, #5a381e 32px 36px),
+    linear-gradient(180deg, #9e7044 0%, #6b4428 100%);
+  box-shadow:
+    0 0 0 2px rgba(68, 39, 16, 0.78) inset,
+    0 0 0 5px rgba(235, 192, 133, 0.18) inset,
+    0 4px 0 rgba(34, 18, 8, 0.34);
+  z-index: 4;
+}
+
+.console-desk-trim {
+  left: 10px;
+  right: 10px;
+  top: 4px;
+  height: 3px;
+  background: linear-gradient(90deg, #f3d391 0%, #c48d53 100%);
+}
+
+.console-control-strip {
+  left: 24px;
+  right: 24px;
+  top: 8px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 241, 207, 0.1), rgba(255, 241, 207, 0) 24%),
+    linear-gradient(180deg, #3b4a40 0%, #1f2822 100%);
+  box-shadow:
+    0 0 0 1px rgba(24, 15, 10, 0.72),
+    0 0 0 2px rgba(118, 95, 56, 0.14) inset,
+    0 1px 0 rgba(255, 236, 196, 0.12) inset;
+}
+
+.console-control-strip::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 2px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 225, 171, 0.42), rgba(255, 225, 171, 0));
+}
+
+.console-module {
+  bottom: 5px;
+}
+
+.console-module-left {
+  left: 14px;
+  width: 20px;
+  height: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.2), rgba(255, 250, 240, 0) 34%),
+    linear-gradient(180deg, #d3be96 0%, #ae936c 100%);
+  box-shadow:
+    0 0 0 1px rgba(89, 63, 35, 0.72),
+    2px 2px 0 rgba(96, 74, 45, 0.34);
+}
+
+.console-module-left::before,
+.console-module-left::after,
+.console-module-right::before,
+.console-module-right::after,
+.console-keyboard::before {
+  content: '';
+  position: absolute;
+}
+
+.console-module-left::before {
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #efe6d2 0%, #d8c9ad 100%);
+}
+
+.console-module-left::after {
+  left: 3px;
+  right: -3px;
+  top: -3px;
+  height: 4px;
+  background: linear-gradient(180deg, #ede4d3 0%, #cdbd9e 100%);
+  box-shadow: 0 0 0 1px rgba(102, 76, 45, 0.42);
+}
+
+.console-module-right {
+  right: 16px;
+  width: 12px;
+  height: 10px;
+  border-radius: 0 0 2px 2px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #455f8f 0%, #26344f 100%);
+  box-shadow:
+    0 0 0 1px rgba(21, 29, 46, 0.82),
+    0 0 0 1px rgba(144, 170, 211, 0.12) inset;
+}
+
+.console-module-right::before {
+  left: 2px;
+  right: 2px;
+  top: 1px;
+  height: 2px;
+  background: linear-gradient(90deg, #b6804f 0%, #6b3f1c 100%);
+}
+
+.console-module-right::after {
+  right: -4px;
+  top: 2px;
+  width: 4px;
+  height: 4px;
+  border: 1px solid rgba(183, 201, 232, 0.72);
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+}
+
+.console-keyboard {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 44px;
+  height: 7px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(180deg, #d4d0c8 0%, #8d877d 100%);
+  box-shadow:
+    0 0 0 1px rgba(60, 49, 37, 0.82),
+    0 0 0 1px rgba(243, 237, 224, 0.12) inset;
+}
+
+.console-keyboard::before {
+  inset: 1px 3px 2px;
+  background:
+    repeating-linear-gradient(90deg, #525965 0 2px, transparent 2px 4px),
+    repeating-linear-gradient(180deg, transparent 0 2px, rgba(42, 48, 58, 0.34) 2px 3px);
+  opacity: 0.9;
+}
+
+.console-desk-front {
+  left: 24px;
+  right: 24px;
+  top: 76px;
+  height: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 6px;
+  padding: 3px 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 231, 190, 0.12), rgba(255, 231, 190, 0) 24%),
+    linear-gradient(180deg, #7b5230 0%, #533119 100%);
+  box-shadow:
+    0 0 0 2px rgba(57, 31, 13, 0.84) inset,
+    0 2px 0 rgba(232, 192, 132, 0.18) inset,
+    0 -2px 0 rgba(49, 27, 12, 0.24) inset;
+  z-index: 5;
+}
+
+.console-front-panel {
+  position: relative;
+  display: block;
+  background:
+    linear-gradient(180deg, rgba(255, 221, 171, 0.12), rgba(255, 221, 171, 0) 28%),
+    repeating-linear-gradient(90deg, #7f5634 0 12px, #72492a 12px 24px, #643d20 24px 28px),
+    linear-gradient(180deg, #875a35 0%, #5b351b 100%);
+  box-shadow:
+    0 0 0 1px rgba(51, 28, 11, 0.86),
+    0 0 0 2px rgba(229, 190, 134, 0.1) inset;
+}
+
+.console-front-panel::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 3px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(247, 212, 150, 0.56), rgba(247, 212, 150, 0));
+}
+
+.console-front-panel::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 14px;
+  height: 3px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d7b27a 0%, #8e6537 100%);
+  box-shadow: 0 0 0 1px rgba(83, 51, 20, 0.55);
+}
+
+.console-front-panel-center {
+  background:
+    linear-gradient(180deg, rgba(255, 233, 192, 0.14), rgba(255, 233, 192, 0) 30%),
+    repeating-linear-gradient(90deg, #88603b 0 14px, #7a512f 14px 28px, #6b4323 28px 32px),
+    linear-gradient(180deg, #90623b 0%, #60371d 100%);
+}
+
+.console-sidecar {
+  top: 42px;
+  width: 18px;
+  height: 40px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #6d4828 0%, #4c2d17 100%);
+  box-shadow:
+    0 0 0 2px rgba(68, 39, 15, 0.82) inset,
+    0 3px 0 rgba(27, 14, 5, 0.24);
+  z-index: 3;
+}
+
+.console-sidecar-left {
+  left: 0;
+}
+
+.console-sidecar-right {
+  right: 0;
+}

@@ -1,0 +1,204 @@
+.sofa-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sofa-tv,
+.sofa-tv-screen,
+.sofa-tv-glow,
+.sofa-tv-stand,
+.sofa-wall-strip,
+.sofa-body,
+.sofa-backrest,
+.sofa-seat,
+.sofa-arm,
+.sofa-pillow,
+.sofa-rug,
+.sofa-side-table,
+.sofa-side-mug {
+  position: absolute;
+}
+
+.sofa-tv {
+  left: 50%;
+  top: -8px;
+  bottom: auto;
+  width: 76px;
+  height: 38px;
+  transform: translateX(-50%);
+}
+
+.sofa-tv-screen {
+  inset: 0;
+  border: 3px solid #18263b;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, #0d2c49 0%, #07131f 100%);
+  box-shadow:
+    0 0 0 2px rgba(99, 174, 214, 0.12) inset,
+    0 6px 0 rgba(11, 16, 26, 0.28);
+}
+
+.sofa-tv-screen::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  background:
+    repeating-linear-gradient(90deg, rgba(95, 239, 255, 0.3) 0 7px, transparent 7px 11px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 56%);
+}
+
+.sofa-tv-glow {
+  left: -18px;
+  right: -18px;
+  top: 4px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(93, 219, 255, 0.14) 0%, rgba(93, 219, 255, 0.04) 40%, transparent 72%);
+  filter: blur(2px);
+}
+
+.sofa-tv-stand {
+  left: 50%;
+  bottom: -6px;
+  width: 14px;
+  height: 6px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #9fb4c7 0%, #526173 100%);
+}
+
+.sofa-tv-stand::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 26px;
+  height: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #46556b 0%, #9cb1c9 50%, #46556b 100%);
+}
+
+.sofa-wall-strip {
+  left: 16px;
+  right: 16px;
+  top: 38px;
+  bottom: auto;
+  height: 6px;
+  background: linear-gradient(180deg, rgba(255, 236, 202, 0.34), rgba(126, 82, 48, 0.88));
+  box-shadow:
+    0 1px 0 rgba(255, 245, 228, 0.22) inset,
+    0 -1px 0 rgba(62, 34, 16, 0.42) inset;
+}
+
+.sofa-body {
+  left: 22px;
+  right: 28px;
+  top: auto;
+  bottom: 2px;
+  height: 48px;
+}
+
+.sofa-backrest {
+  left: 10px;
+  right: 10px;
+  top: 0;
+  height: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 232, 248, 0.12), rgba(255, 232, 248, 0) 28%),
+    linear-gradient(180deg, #7e5d84 0%, #4a3550 100%);
+  box-shadow:
+    0 0 0 2px rgba(56, 31, 59, 0.84) inset,
+    0 4px 0 rgba(35, 22, 40, 0.26);
+}
+
+.sofa-seat {
+  top: 20px;
+  width: calc(33.333% - 6px);
+  height: 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, #6f5174 0%, #402c46 100%);
+  box-shadow:
+    0 0 0 2px rgba(53, 30, 55, 0.82) inset,
+    0 3px 0 rgba(32, 18, 34, 0.22);
+}
+
+.sofa-seat-left { left: 0; }
+.sofa-seat-center { left: 33.333%; transform: translateX(-1px); }
+.sofa-seat-right { right: 0; }
+
+.sofa-arm {
+  top: 9px;
+  width: 16px;
+  height: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 240, 245, 0.1), rgba(255, 240, 245, 0) 28%),
+    linear-gradient(180deg, #704d75 0%, #3d283f 100%);
+  box-shadow: 0 0 0 2px rgba(50, 27, 52, 0.82) inset;
+}
+
+.sofa-arm-left { left: -12px; }
+.sofa-arm-right { right: -10px; }
+
+.sofa-pillow {
+  top: 6px;
+  width: 18px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 36%),
+    linear-gradient(180deg, #c8bf95 0%, #8f7e5c 100%);
+  box-shadow: 0 0 0 1px rgba(100, 84, 50, 0.6);
+}
+
+.sofa-pillow-left { left: 18px; }
+.sofa-pillow-right { right: 18px; }
+
+.sofa-rug {
+  left: 34px;
+  right: 56px;
+  top: auto;
+  bottom: -4px;
+  height: 8px;
+  background:
+    repeating-linear-gradient(90deg, #a67e5a 0 16px, #8d6749 16px 32px, #724f36 32px 36px),
+    linear-gradient(180deg, #b98e66 0%, #7d573e 100%);
+  box-shadow:
+    0 0 0 1px rgba(79, 48, 24, 0.7) inset,
+    0 1px 0 rgba(255, 223, 176, 0.18) inset;
+}
+
+.sofa-side-table {
+  right: 2px;
+  top: auto;
+  bottom: 10px;
+  width: 18px;
+  height: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 233, 197, 0.12), rgba(255, 233, 197, 0) 24%),
+    linear-gradient(180deg, #8c633d 0%, #603d21 100%);
+  box-shadow:
+    0 0 0 2px rgba(82, 51, 26, 0.82) inset,
+    0 3px 0 rgba(33, 18, 8, 0.2);
+}
+
+.sofa-side-mug {
+  left: 5px;
+  top: -7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(180deg, #ffd6ab 0%, #a86935 100%);
+  box-shadow: 0 0 0 1px rgba(124, 77, 37, 0.5);
+}
+
+.sofa-side-mug::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: -3px;
+  width: 4px;
+  height: 4px;
+  border: 1px solid rgba(247, 219, 182, 0.72);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+}

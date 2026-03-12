@@ -1,0 +1,142 @@
+.studydesk-character-anchor {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 66px;
+  height: 88px;
+  transform: translateX(-50%);
+  opacity: 0.9;
+}
+
+.studydesk-character-anchor.is-empty {
+  width: 52px;
+  height: 74px;
+  bottom: 2px;
+  border-radius: 26px 26px 18px 18px;
+  border: 1px dashed rgba(255, 227, 176, 0.18);
+  background: linear-gradient(180deg, rgba(255, 221, 174, 0.05), rgba(88, 60, 44, 0.02));
+  box-shadow: 0 0 0 1px rgba(255, 244, 222, 0.02) inset;
+  opacity: 0.52;
+}
+
+.studydesk-character-anchor.is-empty::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 227, 176, 0.18);
+  background: rgba(255, 231, 197, 0.04);
+}
+
+.studydesk-character-anchor.is-occupied {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.26));
+}
+
+.studydesk-selection-ring,
+.studydesk-character-seatback,
+.studydesk-character-body,
+.studydesk-character-arm,
+.studydesk-character-head,
+.studydesk-character-thought {
+  position: absolute;
+}
+
+.studydesk-selection-ring {
+  left: 50%;
+  bottom: 0;
+  width: 78px;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 212, 143, 0.28) 0%, rgba(255, 212, 143, 0.12) 45%, transparent 76%);
+  opacity: 0.72;
+}
+
+.studydesk-character-seatback {
+  left: 50%;
+  bottom: 18px;
+  width: 40px;
+  height: 48px;
+  transform: translateX(-50%);
+  border-radius: 20px 20px 14px 14px;
+  background: linear-gradient(180deg, rgba(90, 62, 54, 0.92), rgba(46, 31, 31, 0.97));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 229, 200, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.studydesk-character-body {
+  left: 50%;
+  bottom: 16px;
+  width: 32px;
+  height: 34px;
+  transform: translateX(-42%);
+  border-radius: 16px 16px 14px 14px;
+  background: linear-gradient(180deg, rgba(58, 72, 99, 0.98), rgba(28, 35, 51, 0.99));
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+}
+
+.studydesk-character-arm {
+  left: 50%;
+  bottom: 26px;
+  width: 28px;
+  height: 10px;
+  transform: translateX(-4px) rotate(10deg);
+  transform-origin: left center;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(234, 205, 175, 0.84), rgba(137, 107, 83, 0.72));
+  box-shadow: 0 0 0 1px rgba(255, 231, 201, 0.04);
+}
+
+.studydesk-character-head {
+  left: 50%;
+  bottom: 44px;
+  width: 20px;
+  height: 20px;
+  transform: translateX(-48%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255, 236, 210, 0.24), transparent 28%),
+    linear-gradient(180deg, rgba(72, 51, 47, 0.98), rgba(40, 28, 28, 1));
+  box-shadow:
+    0 0 0 1px rgba(255, 232, 207, 0.1),
+    0 2px 7px rgba(0, 0, 0, 0.2);
+}
+
+.studydesk-character-thought {
+  top: 4px;
+  left: 50%;
+  transform: translateX(18px);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(255, 239, 214, 0.16);
+  color: #fff1d5;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 14px rgba(255, 207, 138, 0.12);
+}
+
+.studydesk-character-anchor.is-selected .studydesk-selection-ring {
+  opacity: 1;
+  background: radial-gradient(circle, rgba(255, 212, 143, 0.42) 0%, rgba(255, 212, 143, 0.18) 48%, transparent 78%);
+}
+
+.studydesk-character-anchor.status-thinking .studydesk-character-head,
+.studydesk-character-anchor.status-working .studydesk-character-head {
+  box-shadow: 0 0 0 1px rgba(255, 232, 207, 0.1), 0 0 16px rgba(255, 210, 148, 0.14);
+}
+
+.studydesk-character-anchor.status-working .studydesk-character-arm {
+  transform: translateX(-2px) rotate(5deg);
+}
+
+.studydesk-character-anchor.status-idle .studydesk-character-body {
+  opacity: 0.92;
+}

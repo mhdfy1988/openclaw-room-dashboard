@@ -1,0 +1,29 @@
+{
+  "name": "room-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local pixel-room dashboard for OpenClaw multi-agent status.",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "echo \"Use frontend/backend workspace scripts for development\"",
+    "dev:bg:start": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\dev-background.ps1 start",
+    "dev:bg:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\dev-background.ps1 stop",
+    "dev:bg:status": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\dev-background.ps1 status",
+    "build": "cmd /c npm.cmd run build --workspace backend && cmd /c npm.cmd run build --workspace frontend",
+    "lint": "cmd /c npm.cmd run lint --workspace backend && cmd /c npm.cmd run lint --workspace frontend",
+    "test": "cmd /c npm.cmd run test --workspace backend && cmd /c npm.cmd run test --workspace frontend",
+    "verify": "cmd /c npm.cmd run lint && cmd /c npm.cmd run build && cmd /c npm.cmd run test && node scripts/smoke-test.mjs",
+    "prod:start": "cmd /c npm.cmd run prod --workspace backend",
+    "openclaw:import-config": "node scripts/import-openclaw-config.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "screenshots:prod": "node scripts/capture-prod-screenshots.mjs",
+    "screenshots:prod:install": "npx playwright install chromium"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.2"
+  }
+}

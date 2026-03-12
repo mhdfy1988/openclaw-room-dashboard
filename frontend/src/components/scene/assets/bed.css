@@ -1,0 +1,151 @@
+.bed-shell {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bed-headboard,
+.bed-mattress,
+.bed-pillow,
+.bed-blanket,
+.bed-throw,
+.bed-frame,
+.bed-nightstand,
+.bed-lamp,
+.bed-rug {
+  position: absolute;
+}
+
+.bed-headboard {
+  left: 20px;
+  right: 28px;
+  top: 10px;
+  height: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 241, 212, 0.14), rgba(255, 241, 212, 0) 24%),
+    repeating-linear-gradient(90deg, #7a5737 0 18px, #69482b 18px 36px, #583b22 36px 40px),
+    linear-gradient(180deg, #8d6540 0%, #5c3920 100%);
+  box-shadow:
+    0 0 0 2px rgba(84, 52, 26, 0.82) inset,
+    0 4px 0 rgba(29, 15, 6, 0.18);
+}
+
+.bed-mattress {
+  left: 22px;
+  right: 30px;
+  top: 24px;
+  height: 74px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 24%),
+    linear-gradient(180deg, #d8d8de 0%, #a8a9b5 100%);
+  box-shadow:
+    0 0 0 2px rgba(118, 118, 132, 0.72) inset,
+    0 6px 0 rgba(72, 73, 88, 0.14);
+}
+
+.bed-pillow {
+  top: 8px;
+  width: 32px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 40%),
+    linear-gradient(180deg, #f6f1df 0%, #cbc2ad 100%);
+  box-shadow: 0 0 0 1px rgba(159, 146, 120, 0.55);
+}
+
+.bed-pillow-left { left: 14px; }
+.bed-pillow-right { right: 12px; }
+
+.bed-blanket {
+  left: 8px;
+  right: 8px;
+  bottom: 10px;
+  height: 40px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #6074a4 0%, #384563 100%);
+  box-shadow:
+    0 0 0 2px rgba(48, 58, 82, 0.78) inset,
+    0 3px 0 rgba(28, 34, 49, 0.16);
+}
+
+.bed-throw {
+  left: 16px;
+  bottom: 44px;
+  width: 66px;
+  height: 8px;
+  background:
+    repeating-linear-gradient(90deg, #bf8d67 0 8px, #9e704e 8px 16px, #7f5538 16px 20px),
+    linear-gradient(180deg, #ca9871 0%, #8e5f3f 100%);
+  box-shadow:
+    0 0 0 1px rgba(104, 66, 39, 0.64) inset,
+    0 1px 0 rgba(255, 231, 203, 0.12) inset;
+}
+
+.bed-frame {
+  left: 20px;
+  right: 26px;
+  top: 96px;
+  height: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 233, 197, 0.12), rgba(255, 233, 197, 0) 24%),
+    linear-gradient(180deg, #7c5634 0%, #553219 100%);
+  box-shadow:
+    0 0 0 2px rgba(80, 49, 24, 0.8) inset,
+    0 3px 0 rgba(31, 16, 7, 0.2);
+}
+
+.bed-nightstand {
+  right: 2px;
+  top: 38px;
+  width: 18px;
+  height: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 233, 197, 0.12), rgba(255, 233, 197, 0) 24%),
+    linear-gradient(180deg, #8d633e 0%, #5e3a21 100%);
+  box-shadow:
+    0 0 0 2px rgba(84, 51, 24, 0.82) inset,
+    0 3px 0 rgba(31, 16, 7, 0.18);
+}
+
+.bed-nightstand::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 6px;
+  height: 3px;
+  background: linear-gradient(90deg, #dab989 0%, #93663b 100%);
+}
+
+.bed-lamp {
+  left: 4px;
+  top: -16px;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(180deg, #ffd9a6 0%, #b9773c 100%);
+  box-shadow: 0 0 0 1px rgba(128, 84, 44, 0.5);
+}
+
+.bed-lamp::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  bottom: -6px;
+  width: 2px;
+  height: 6px;
+  background: linear-gradient(180deg, #c6c0b7 0%, #726b63 100%);
+}
+
+.bed-rug {
+  left: 22px;
+  right: 32px;
+  top: 112px;
+  height: 12px;
+  background:
+    repeating-linear-gradient(90deg, #8ba0d0 0 10px, #7289b6 10px 20px, #5c739d 20px 24px),
+    linear-gradient(180deg, #9fb5e2 0%, #637ca8 100%);
+  box-shadow:
+    0 0 0 1px rgba(58, 73, 103, 0.62) inset,
+    0 1px 0 rgba(227, 236, 255, 0.12) inset;
+}
