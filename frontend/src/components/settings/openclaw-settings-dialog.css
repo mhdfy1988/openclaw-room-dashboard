@@ -310,6 +310,9 @@
 
 .settings-actions button {
   padding: 11px 18px;
+  min-width: 132px;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .settings-actions .primary {
