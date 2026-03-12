@@ -28,6 +28,7 @@ const emptyDraft: OpenClawConfigDraft = {
   timeoutMs: 6000,
   messageChannel: '',
   accountId: '',
+  allowInsecureTls: false,
   alertThresholds: defaultAlertThresholds,
   clearSavedToken: false,
 }
@@ -51,6 +52,7 @@ function buildDraft(config: OpenClawConfigView): OpenClawConfigDraft {
     timeoutMs: config.timeoutMs || 6000,
     messageChannel: config.messageChannel || '',
     accountId: config.accountId || '',
+    allowInsecureTls: config.allowInsecureTls === true,
     alertThresholds: config.alertThresholds || defaultAlertThresholds,
     clearSavedToken: false,
   }
@@ -400,14 +402,25 @@ export function OpenClawSettingsDialog({
         {notice ? <p className="settings-notice">{notice}</p> : null}
 
         <div className="settings-form-grid">
-          <label className="settings-field settings-field-checkbox">
-            <input
-              type="checkbox"
-              checked={draft.enabled}
-              onChange={(event) => updateDraft('enabled', event.target.checked)}
-            />
-            <span>启用 OpenClaw 接入</span>
-          </label>
+          <div className="settings-checkbox-grid">
+            <label className="settings-field settings-field-checkbox">
+              <input
+                type="checkbox"
+                checked={draft.enabled}
+                onChange={(event) => updateDraft('enabled', event.target.checked)}
+              />
+              <span>启用 OpenClaw 接入</span>
+            </label>
+
+            <label className="settings-field settings-field-checkbox">
+              <input
+                type="checkbox"
+                checked={draft.allowInsecureTls}
+                onChange={(event) => updateDraft('allowInsecureTls', event.target.checked)}
+              />
+              <span>临时忽略 HTTPS / WSS 证书校验，仅用于代理测试</span>
+            </label>
+          </div>
 
           <label className="settings-field settings-field-full">
             <span>网关地址或完整带密钥的链接</span>

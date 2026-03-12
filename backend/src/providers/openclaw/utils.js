@@ -48,6 +48,7 @@ export function resolveGatewayConfigFromIntegration(integration) {
     return {
       enabled: false,
       sessionKey: integration.sessionKey || 'main',
+      allowInsecureTls: integration.allowInsecureTls === true,
       configSource: integration.source,
       configFilePath: integration.configFilePath,
       configError: integration.configError,
@@ -64,6 +65,7 @@ export function resolveGatewayConfigFromIntegration(integration) {
     sessionKey: integration.sessionKey || 'main',
     messageChannel: integration.messageChannel || '',
     accountId: integration.accountId || '',
+    allowInsecureTls: integration.allowInsecureTls === true,
     timeoutMs: asNumber(integration.timeoutMs, DEFAULT_OPENCLAW_TIMEOUT_MS),
     configSource: integration.source,
     configFilePath: integration.configFilePath,

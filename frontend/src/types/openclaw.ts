@@ -12,6 +12,7 @@ export type OpenClawConfigView = {
   timeoutMs: number
   messageChannel: string
   accountId: string
+  allowInsecureTls: boolean
   alertThresholds: OpenClawAlertThresholds
   hasToken: boolean
   maskedToken: string
@@ -55,6 +56,7 @@ export type OpenClawConfigDraft = {
   timeoutMs: number
   messageChannel: string
   accountId: string
+  allowInsecureTls: boolean
   alertThresholds: OpenClawAlertThresholds
   clearSavedToken: boolean
 }

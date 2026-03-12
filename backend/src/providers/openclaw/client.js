@@ -1,4 +1,6 @@
 import fs from 'node:fs'
+import http from 'node:http'
+import https from 'node:https'
 import path from 'node:path'
 import { execFile as execFileCallback } from 'node:child_process'
 import { promisify } from 'node:util'
@@ -10,6 +12,55 @@ const OPENCLAW_COMMAND = process.platform === 'win32' ? 'openclaw.cmd' : 'opencl
 const CLI_MAX_BUFFER = 4 * 1024 * 1024
 
 let windowsCliInvocationPromise = null
+
+function buildTimeoutError() {
+  const error = createError('request timed out')
+  error.code = 'ETIMEDOUT'
+  return error
+}
+
+function collectErrorMessages(error) {
+  const messages = []
+  let current = error
+
+  while (current) {
+    if (typeof current?.message === 'string' && current.message.trim()) {
+      messages.push(current.message.trim())
+    }
+
+    current = current.cause
+  }
+
+  return messages
+}
+
+function formatErrorMessage(error, fallback = '未知错误') {
+  return collectErrorMessages(error).find(Boolean) || fallback
+}
+
+function isTlsTrustFailure(message) {
+  const normalized = String(message || '').toLowerCase()
+
+  return (
+    normalized.includes('trust relationship') ||
+    normalized.includes('self signed certificate') ||
+    normalized.includes('unable to verify the first certificate') ||
+    normalized.includes('unable to get local issuer certificate') ||
+    normalized.includes('certificate has expired') ||
+    normalized.includes("certificate's altnames") ||
+    normalized.includes('hostname/ip does not match certificate') ||
+    normalized.includes('secure channel') ||
+    normalized.includes('cert_')
+  )
+}
+
+function isPairingRequired(message) {
+  return /pairing required/i.test(String(message || ''))
+}
+
+function isAuthFailure(message) {
+  return /401|403|unauthorized|forbidden|invalid token|auth/i.test(String(message || ''))
+}
 
 function normalizeGatewayWsUrl(baseUrl) {
   const url = new URL(baseUrl)
@@ -66,7 +117,57 @@ async function resolveWindowsCliInvocation() {
   return windowsCliInvocationPromise
 }
 
-async function execGatewayCli(args, timeoutMs) {
+async function postJson(urlString, { headers, payload, timeoutMs, allowInsecureTls = false }) {
+  const url = new URL(urlString)
+  const body = JSON.stringify(payload)
+  const transport = url.protocol === 'https:' ? https : http
+
+  return new Promise((resolve, reject) => {
+    const request = transport.request(
+      {
+        protocol: url.protocol,
+        hostname: url.hostname,
+        port: url.port || undefined,
+        path: `${url.pathname}${url.search}`,
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Length': Buffer.byteLength(body),
+        },
+        rejectUnauthorized: url.protocol === 'https:' ? !allowInsecureTls : undefined,
+      },
+      (response) => {
+        let responseBody = ''
+        response.setEncoding('utf8')
+        response.on('data', (chunk) => {
+          responseBody += chunk
+        })
+        response.on('end', () => {
+          resolve({
+            statusCode: response.statusCode || 0,
+            body: responseBody,
+          })
+        })
+      },
+    )
+
+    request.setTimeout(timeoutMs, () => {
+      request.destroy(buildTimeoutError())
+    })
+    request.on('error', reject)
+    request.write(body)
+    request.end()
+  })
+}
+
+async function execGatewayCli(args, timeoutMs, { allowInsecureTls = false } = {}) {
+  const env = allowInsecureTls
+    ? {
+        ...process.env,
+        NODE_TLS_REJECT_UNAUTHORIZED: '0',
+      }
+    : process.env
+
   if (process.platform === 'win32') {
     const invocation = await resolveWindowsCliInvocation()
 
@@ -74,6 +175,7 @@ async function execGatewayCli(args, timeoutMs) {
       timeout: timeoutMs,
       windowsHide: true,
       maxBuffer: CLI_MAX_BUFFER,
+      env,
     })
   }
 
@@ -81,6 +183,7 @@ async function execGatewayCli(args, timeoutMs) {
     timeout: timeoutMs,
     windowsHide: true,
     maxBuffer: CLI_MAX_BUFFER,
+    env,
   })
 }
 
@@ -108,19 +211,24 @@ async function callGatewayCliMethod(config, method, params) {
   let stdout = ''
 
   try {
-    const result = await execGatewayCli(args, cliTimeoutMs)
+    const result = await execGatewayCli(args, cliTimeoutMs, {
+      allowInsecureTls: config.allowInsecureTls === true,
+    })
     stdout = result.stdout || ''
   } catch (error) {
     const stderr = typeof error?.stderr === 'string' ? error.stderr.trim() : ''
     const output = typeof error?.stdout === 'string' ? error.stdout.trim() : ''
-    const message = stderr || output || error?.message || String(error) || '未知错误'
-    const isTimeout = error?.code === 'ETIMEDOUT' || error?.signal === 'SIGTERM'
-    const isAuthFailure = /401|403|unauthorized|forbidden|invalid token|auth/i.test(message)
-    const prefix = isTimeout
-      ? 'OpenClaw 网关请求超时'
-      : isAuthFailure
-        ? 'OpenClaw 网关认证失败'
-        : `OpenClaw 网关方法 ${method} 调用失败`
+    const message = stderr || output || formatErrorMessage(error)
+    const prefix =
+      error?.code === 'ETIMEDOUT' || error?.signal === 'SIGTERM'
+        ? 'OpenClaw 网关请求超时'
+        : isTlsTrustFailure(message)
+          ? 'OpenClaw WSS 证书不受信'
+          : isPairingRequired(message)
+            ? 'OpenClaw 远程 Gateway 需要设备配对'
+            : isAuthFailure(message)
+              ? 'OpenClaw 网关认证失败'
+              : `OpenClaw 网关方法 ${method} 调用失败`
 
     throw createError(`${prefix}：${message}`, error)
   }
@@ -134,9 +242,6 @@ async function callGatewayCliMethod(config, method, params) {
 
 export function createGatewayClient(config) {
   async function invokeTool(tool, args = {}) {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), config.timeoutMs)
-
     try {
       const headers = {
         'Content-Type': 'application/json',
@@ -154,35 +259,42 @@ export function createGatewayClient(config) {
         headers['x-openclaw-account-id'] = config.accountId
       }
 
-      const response = await fetch(`${config.baseUrl}/tools/invoke`, {
-        method: 'POST',
+      const response = await postJson(`${config.baseUrl}/tools/invoke`, {
         headers,
-        body: JSON.stringify({
+        payload: {
           tool,
           action: 'json',
           args,
           sessionKey: config.sessionKey,
-        }),
-        signal: controller.signal,
+        },
+        timeoutMs: config.timeoutMs,
+        allowInsecureTls: config.allowInsecureTls === true,
       })
 
-      const payload = await response.json().catch(() => null)
+      const payload = response.body ? JSON.parse(response.body) : null
 
-      if (!response.ok || !payload?.ok) {
+      if (response.statusCode < 200 || response.statusCode >= 300 || !payload?.ok) {
         const message =
-          payload?.error?.message || `OpenClaw 网关调用 ${tool} 时返回 ${response.status}`
+          payload?.error?.message || `OpenClaw 网关调用 ${tool} 时返回 ${response.statusCode}`
         throw createError(message)
       }
 
       return payload.result?.details ?? {}
     } catch (error) {
-      if (error?.name === 'AbortError') {
+      if (error?.code === 'ETIMEDOUT') {
         throw createError('OpenClaw 网关请求超时', error)
       }
 
-      throw createError(`OpenClaw 网关请求失败：${error?.message || String(error)}`, error)
-    } finally {
-      clearTimeout(timeout)
+      const message = formatErrorMessage(error)
+      const prefix = isTlsTrustFailure(message)
+        ? 'OpenClaw HTTPS 证书不受信'
+        : isPairingRequired(message)
+          ? 'OpenClaw 远程 Gateway 需要设备配对'
+          : isAuthFailure(message)
+            ? 'OpenClaw 网关认证失败'
+            : 'OpenClaw 网关请求失败'
+
+      throw createError(`${prefix}：${message}`, error)
     }
   }
 

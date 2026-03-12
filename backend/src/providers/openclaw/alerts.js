@@ -33,6 +33,112 @@ function formatRelativeWindow(updatedAt, now) {
   return `${days} 天前`
 }
 
+function isTlsTrustFailure(message) {
+  const normalized = String(message || '').toLowerCase()
+
+  return (
+    normalized.includes('trust relationship') ||
+    normalized.includes('self signed certificate') ||
+    normalized.includes('unable to verify the first certificate') ||
+    normalized.includes('unable to get local issuer certificate') ||
+    normalized.includes('certificate has expired') ||
+    normalized.includes("certificate's altnames") ||
+    normalized.includes('hostname/ip does not match certificate') ||
+    normalized.includes('secure channel') ||
+    normalized.includes('cert_')
+  )
+}
+
+function isPairingRequired(message) {
+  return /pairing required/i.test(String(message || ''))
+}
+
+function sortAlerts(alerts) {
+  const priority = {
+    critical: 0,
+    warning: 1,
+    info: 2,
+  }
+
+  return [...alerts]
+    .sort(
+      (left, right) =>
+        priority[left.severity] - priority[right.severity] ||
+        left.title.localeCompare(right.title, 'zh-CN'),
+    )
+    .slice(0, MAX_ALERTS)
+}
+
+function joinMetaMethodNames(methodErrors = {}) {
+  const labels = []
+
+  if (methodErrors.status) {
+    labels.push('status')
+  }
+
+  if (methodErrors.health) {
+    labels.push('health')
+  }
+
+  if (methodErrors.systemPresence) {
+    labels.push('system-presence')
+  }
+
+  return labels.length > 0 ? labels.join(' / ') : 'gateway meta'
+}
+
+function buildRemoteTlsAlert(gateway, severity = 'warning') {
+  return {
+    id: 'gateway-remote-tls',
+    severity,
+    title: '远程 Gateway 证书不受信',
+    detail: `当前机器不信任 ${gateway?.gatewayUrl || 'OpenClaw Gateway'} 的 HTTPS/WSS 证书。请改用证书匹配的域名、导入根证书，或临时启用“忽略 TLS 证书校验”。`,
+  }
+}
+
+function buildRemotePairingAlert(gateway, severity = 'warning', detailSuffix = '') {
+  return {
+    id: 'gateway-remote-pairing',
+    severity,
+    title: '远程 Gateway 需要设备配对',
+    detail: `远程 ${gateway?.gatewayUrl || 'OpenClaw Gateway'} 尚未批准当前设备，请先在远端执行 devices approve。${detailSuffix}`.trim(),
+  }
+}
+
+function buildDegradedGatewayAlert(gateway) {
+  const details = Array.isArray(gateway?.metaErrors) ? gateway.metaErrors : []
+  const methodLabel = joinMetaMethodNames(gateway?.metaMethodErrors)
+  const combinedMessage = details.join(' ')
+
+  if (isTlsTrustFailure(combinedMessage)) {
+    return buildRemoteTlsAlert(gateway)
+  }
+
+  if (/security error|plaintext ws:\/\//i.test(combinedMessage)) {
+    return {
+      id: 'gateway-remote-security',
+      severity: 'warning',
+      title: '远程 Gateway 需要安全接入',
+      detail: `远程 ${gateway.gatewayUrl || 'OpenClaw Gateway'} 拒绝明文 ws:// 访问，${methodLabel} 暂时不可用。请改用 wss://、SSH 隧道或 Tailscale。`,
+    }
+  }
+
+  if (isPairingRequired(combinedMessage)) {
+    return buildRemotePairingAlert(
+      gateway,
+      'warning',
+      `${methodLabel} 暂时不可用。`,
+    )
+  }
+
+  return {
+    id: 'gateway-partial-data',
+    severity: 'warning',
+    title: 'OpenClaw Gateway 仅部分可用',
+    detail: `${methodLabel} 当前不可用。看板还能显示角色和最近会话，但渠道、连接数和部分实时统计会缺失。`,
+  }
+}
+
 export function normalizePresenceEntries(presenceData) {
   if (!Array.isArray(presenceData)) {
     return []
@@ -185,71 +291,6 @@ export function buildGatewayOverview(config, meta, lastSuccessAt, lastError) {
   }
 }
 
-function sortAlerts(alerts) {
-  const priority = {
-    critical: 0,
-    warning: 1,
-    info: 2,
-  }
-
-  return [...alerts]
-    .sort(
-      (left, right) =>
-        priority[left.severity] - priority[right.severity] ||
-        left.title.localeCompare(right.title, 'zh-CN'),
-    )
-    .slice(0, MAX_ALERTS)
-}
-
-function joinMetaMethodNames(methodErrors = {}) {
-  const labels = []
-
-  if (methodErrors.status) {
-    labels.push('status')
-  }
-
-  if (methodErrors.health) {
-    labels.push('health')
-  }
-
-  if (methodErrors.systemPresence) {
-    labels.push('system-presence')
-  }
-
-  return labels.length > 0 ? labels.join(' / ') : 'gateway meta'
-}
-
-function buildDegradedGatewayAlert(gateway) {
-  const details = Array.isArray(gateway?.metaErrors) ? gateway.metaErrors : []
-  const methodLabel = joinMetaMethodNames(gateway?.metaMethodErrors)
-  const combinedMessage = details.join(' ')
-
-  if (/security error|plaintext ws:\/\//i.test(combinedMessage)) {
-    return {
-      id: 'gateway-remote-security',
-      severity: 'warning',
-      title: '远程 Gateway 需要安全接入',
-      detail: `远程 ${gateway.gatewayUrl || 'OpenClaw Gateway'} 拒绝明文 ws:// 访问，${methodLabel} 暂时不可用。请改用 wss://、SSH 隧道或 Tailscale。`,
-    }
-  }
-
-  if (/pairing required/i.test(combinedMessage)) {
-    return {
-      id: 'gateway-remote-pairing',
-      severity: 'warning',
-      title: '远程 Gateway 需要设备配对',
-      detail: `远程 ${gateway.gatewayUrl || 'OpenClaw Gateway'} 尚未批准当前设备，${methodLabel} 暂时不可用。请在远端执行 devices approve。`,
-    }
-  }
-
-  return {
-    id: 'gateway-partial-data',
-    severity: 'warning',
-    title: 'OpenClaw Gateway 仅部分可用',
-    detail: `${methodLabel} 当前不可用。看板还能显示角色和最近会话，但渠道、连接数和部分实时统计会缺失。`,
-  }
-}
-
 export function buildAlerts({ agents, gateway, now, thresholds = {}, schemaWarnings = [] }) {
   const effectiveThresholds = {
     ...DEFAULT_THRESHOLDS,
@@ -258,12 +299,18 @@ export function buildAlerts({ agents, gateway, now, thresholds = {}, schemaWarni
   const alerts = []
 
   if (gateway?.lastError) {
-    alerts.push({
-      id: 'gateway-error',
-      severity: 'critical',
-      title: 'OpenClaw 网关刷新失败',
-      detail: gateway.lastError,
-    })
+    if (isTlsTrustFailure(gateway.lastError)) {
+      alerts.push(buildRemoteTlsAlert(gateway, 'critical'))
+    } else if (isPairingRequired(gateway.lastError)) {
+      alerts.push(buildRemotePairingAlert(gateway, 'critical'))
+    } else {
+      alerts.push({
+        id: 'gateway-error',
+        severity: 'critical',
+        title: 'OpenClaw 网关刷新失败',
+        detail: gateway.lastError,
+      })
+    }
   } else if (gateway?.status === 'degraded') {
     alerts.push(buildDegradedGatewayAlert(gateway))
   } else if (gateway?.gatewayUrl && gateway?.status === 'offline') {
@@ -311,7 +358,7 @@ export function buildAlerts({ agents, gateway, now, thresholds = {}, schemaWarni
         title:
           ageMs >= effectiveThresholds.agentStaleCriticalMs
             ? `${defaultAgent.name} 长时间无活动`
-            : `${defaultAgent.name} 最近活动偏久`,
+            : `${defaultAgent.name} 最近活动偏少`,
         detail: `${defaultAgent.name} 上次活跃在 ${formatRelativeWindow(defaultAgentLastSeenAt, now)}。`,
       })
     }

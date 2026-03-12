@@ -100,3 +100,21 @@ test('buildAlerts reports remote gateway security restrictions as degraded acces
   assert.ok(degradedAlert)
   assert.match(degradedAlert.detail, /wss:\/\//i)
 })
+
+test('buildAlerts reports TLS trust failures as a dedicated alert', () => {
+  const alerts = buildAlerts({
+    agents: [],
+    gateway: {
+      status: 'offline',
+      gatewayUrl: 'https://172.16.71.151:8443',
+      lastError:
+        'OpenClaw HTTPS 证书不受信：The underlying connection was closed: Could not establish trust relationship for the SSL/TLS secure channel.',
+      channels: [],
+    },
+    now: Date.now(),
+  })
+
+  const tlsAlert = alerts.find((alert) => alert.id === 'gateway-remote-tls')
+  assert.ok(tlsAlert)
+  assert.equal(tlsAlert.severity, 'critical')
+})

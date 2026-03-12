@@ -8,7 +8,7 @@
     "prod": "node src/prod-server.js",
     "build": "node scripts/check-src.mjs",
     "lint": "node scripts/check-src.mjs",
-    "test": "node --test src/providers/openclaw/alerts.test.js src/providers/openclaw/normalizers.test.js src/providers/openclaw/room-state.test.js"
+    "test": "node --test src/config/openclaw-config.test.js src/providers/openclaw/alerts.test.js src/providers/openclaw/normalizers.test.js src/providers/openclaw/room-state.test.js"
   },
   "description": "",
   "main": "index.js",

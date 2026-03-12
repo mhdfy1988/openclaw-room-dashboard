@@ -184,6 +184,7 @@ export async function createApp({ prod = false } = {}) {
         timeoutMs: body.timeoutMs ?? fileConfig.timeoutMs,
         messageChannel: body.messageChannel ?? fileConfig.messageChannel,
         accountId: body.accountId ?? fileConfig.accountId,
+        allowInsecureTls: body.allowInsecureTls ?? fileConfig.allowInsecureTls,
         alertThresholds: body.alertThresholds ?? fileConfig.alertThresholds,
       }
       const result = await testOpenClawGatewayConfig(draft)
@@ -213,6 +214,7 @@ export async function createApp({ prod = false } = {}) {
           timeoutMs: body.timeoutMs,
           messageChannel: body.messageChannel,
           accountId: body.accountId,
+          allowInsecureTls: body.allowInsecureTls,
           alertThresholds: body.alertThresholds,
         },
         { preserveExistingToken: !clearSavedToken },

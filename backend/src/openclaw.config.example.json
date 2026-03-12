@@ -6,6 +6,7 @@
   "timeoutMs": 6000,
   "messageChannel": "",
   "accountId": "",
+  "allowInsecureTls": false,
   "alertThresholds": {
     "agentStaleWarningMs": 600000,
     "agentStaleCriticalMs": 1800000,

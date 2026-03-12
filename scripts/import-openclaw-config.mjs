@@ -31,6 +31,7 @@ const output = {
   timeoutMs: 6000,
   messageChannel: '',
   accountId: '',
+  allowInsecureTls: false,
 }
 
 fs.writeFileSync(targetPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8')

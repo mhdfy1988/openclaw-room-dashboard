@@ -20,6 +20,7 @@ export const DEFAULT_OPENCLAW_CONFIG = {
   timeoutMs: DEFAULT_OPENCLAW_TIMEOUT_MS,
   messageChannel: '',
   accountId: '',
+  allowInsecureTls: false,
   alertThresholds: DEFAULT_OPENCLAW_ALERT_THRESHOLDS,
 }
 
@@ -220,6 +221,11 @@ function mergeConfigValues(raw = {}, fallback = DEFAULT_OPENCLAW_CONFIG) {
       fallback.accountId,
       DEFAULT_OPENCLAW_CONFIG.accountId,
     ),
+    allowInsecureTls: pickFirst(
+      parseBoolean(raw.allowInsecureTls),
+      fallback.allowInsecureTls,
+      DEFAULT_OPENCLAW_CONFIG.allowInsecureTls,
+    ),
     alertThresholds: {
       agentStaleWarningMs: ensureNonNegativeNumber(
         rawThresholds.agentStaleWarningMs,
@@ -276,6 +282,7 @@ export function sanitizeOpenClawConfigForClient(config) {
     timeoutMs: normalized.timeoutMs,
     messageChannel: normalized.messageChannel,
     accountId: normalized.accountId,
+    allowInsecureTls: normalized.allowInsecureTls,
     alertThresholds: normalized.alertThresholds,
     hasToken: Boolean(normalized.token),
     maskedToken: maskToken(normalized.token),
@@ -302,6 +309,7 @@ export function saveOpenClawFileConfig(
     timeoutMs: next.timeoutMs,
     messageChannel: next.messageChannel,
     accountId: next.accountId,
+    allowInsecureTls: next.allowInsecureTls,
     alertThresholds: next.alertThresholds,
   }
 
@@ -322,6 +330,7 @@ export function loadOpenClawIntegrationConfig({ env = process.env } = {}) {
   const envSessionKey = normalizeOptionalString(env.OPENCLAW_SESSION_KEY)
   const envMessageChannel = normalizeOptionalString(env.OPENCLAW_MESSAGE_CHANNEL)
   const envAccountId = normalizeOptionalString(env.OPENCLAW_ACCOUNT_ID)
+  const envAllowInsecureTls = parseBoolean(env.OPENCLAW_ALLOW_INSECURE_TLS)
   const envTimeoutMs = parseNumber(env.OPENCLAW_TIMEOUT_MS)
   const envAgentStaleWarningMs = parseNumber(env.OPENCLAW_AGENT_STALE_WARNING_MS)
   const envAgentStaleCriticalMs = parseNumber(env.OPENCLAW_AGENT_STALE_CRITICAL_MS)
@@ -335,6 +344,7 @@ export function loadOpenClawIntegrationConfig({ env = process.env } = {}) {
     envSessionKey !== undefined ||
     envMessageChannel !== undefined ||
     envAccountId !== undefined ||
+    envAllowInsecureTls !== undefined ||
     envTimeoutMs !== undefined ||
     envAgentStaleWarningMs !== undefined ||
     envAgentStaleCriticalMs !== undefined ||
@@ -361,6 +371,11 @@ export function loadOpenClawIntegrationConfig({ env = process.env } = {}) {
       DEFAULT_OPENCLAW_CONFIG.messageChannel,
     ),
     accountId: pickFirst(envAccountId, file.config.accountId, DEFAULT_OPENCLAW_CONFIG.accountId),
+    allowInsecureTls: pickFirst(
+      envAllowInsecureTls,
+      file.config.allowInsecureTls,
+      DEFAULT_OPENCLAW_CONFIG.allowInsecureTls,
+    ),
     timeoutMs: pickFirst(envTimeoutMs, file.config.timeoutMs, DEFAULT_OPENCLAW_TIMEOUT_MS),
     alertThresholds: {
       agentStaleWarningMs: ensureNonNegativeNumber(
